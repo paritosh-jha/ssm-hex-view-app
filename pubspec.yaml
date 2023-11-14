@@ -37,9 +37,9 @@ dependencies:
   transparent_image: ^2.0.1
   google_fonts: ^6.1.0
   firebase_core: ^2.22.0
-  firebase_auth: ^4.13.0
-  cloud_firestore: ^4.13.0
-
+  firebase_auth: ^4.14.0
+  cloud_firestore: ^4.13.1
+ 
 dev_dependencies:
   flutter_test:
     sdk: flutter

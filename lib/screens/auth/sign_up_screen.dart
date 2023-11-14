@@ -31,27 +31,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _loading = true;
     });
 
-    // String res = await AuthMethods().signUpUser(
-    //   name,
-    //   email,
-    //   password,
-    //   phone,
-    //   vehicleNum,
-    //   vehicleRegNum,
-    //   emergencyContact1,
-    //   emergencyContact2,
-    // );
-    try {
-      userCredentials = await _firebase.createUserWithEmailAndPassword(
-          email: email, password: password);
-      print('success');
-    } catch (e) {
-      print(e);
-    }
+    String res = await AuthMethods().signUpUser(
+      name,
+      email,
+      password,
+      phone,
+      vehicleNum,
+      vehicleRegNum,
+      emergencyContact1,
+      emergencyContact2,
+    );
 
     setState(() {
       _loading = false;
     });
+    print(res);
   }
 
   @override

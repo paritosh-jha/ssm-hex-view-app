@@ -42,7 +42,7 @@ class _SignUpFormState extends State<SignUpForm> {
       enteredVehicleRegNum,
       enteredEmergencyContact1,
       enteredEmergencyContact2,
-  );
+    );
   }
 
   @override
@@ -163,6 +163,15 @@ class _SignUpFormState extends State<SignUpForm> {
                   label: Text('Password'),
                   hintText: 'Enter your password',
                 ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter a valid password';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  enteredPassword = value!;
+                },
               ),
               const SizedBox(
                 height: 30,
