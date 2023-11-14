@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "474766975480",
+    "firebase_url": "https://ssm-qr-code-backend-default-rtdb.firebaseio.com",
+    "project_id": "ssm-qr-code-backend",
+    "storage_bucket": "ssm-qr-code-backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474766975480:android:af9b22d979a5f2fa7ab60d",
+        "android_client_info": {
+          "package_name": "com.example.hex_view"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA594aKndzFX6tU01ac8NwqP5SBtMKKX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474766975480:android:5bac9c36471108da7ab60d",
+        "android_client_info": {
+          "package_name": "com.example.owner_front"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA594aKndzFX6tU01ac8NwqP5SBtMKKX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
