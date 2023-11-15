@@ -40,4 +40,27 @@ class AuthMethods {
     }
     return res;
   }
+
+  Future<String> signInUser(String email, String password) async {
+    String res = 'Some Error Occured';
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      res = 'success';
+    } on FirebaseAuthException catch (e) {
+      res = e.code;
+    }
+    return res;
+  }
+
+  Future<String> signOutUser() async {
+    String res = 'Some Error Occured';
+    try {
+      await _auth.signOut();
+      res = 'success';
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
 }

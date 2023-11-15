@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hex_view/screens/account/account_screen.dart';
 import 'package:hex_view/screens/home/home.dart';
 import 'package:hex_view/screens/qr_connect/qr_connect.dart';
 
@@ -25,6 +26,9 @@ class _TabsScreenState extends State<TabsScreen> {
     if (selectedPageIndex == 1) {
       activePage = const QRConnectScreen();
       activePageTitle = 'QR Connect';
+    } else if (selectedPageIndex == 2) {
+      activePage = const AccountScreen();
+      activePageTitle = 'Account';
     }
 
     return Scaffold(
@@ -34,17 +38,23 @@ class _TabsScreenState extends State<TabsScreen> {
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedPageIndex,
-        showUnselectedLabels: false,
         onTap: (index) {
           _selectedPage(index);
         },
         items: const [
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.card_membership_outlined,
+                Icons.home,
               ),
-              label: 'Car'),
-          BottomNavigationBarItem(icon: Icon(Icons.qr_code), label: 'QR'),
+              label: 'Home'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code),
+            label: 'QR',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Account',
+          ),
         ],
       ),
     );
