@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_view/firebase/auth_methods.dart';
-import 'package:hex_view/screens/auth/widgets/signup_form.dart';
+import 'package:hex_view/screens/auth/widgets/personal_details_form.dart';
+import 'package:hex_view/screens/auth/widgets/signup_credentials_form.dart';
+import 'package:hex_view/screens/auth/widgets/vehicle_details_form.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -15,7 +17,18 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   // ignore: unused_field
   bool _loading = false;
+  String enteredName = '';
+  String enteredPhone = '';
+  String enteredVehicleNum = '';
+  String enteredVehicleRegNum = '';
+  String enteredEmergencyContact1 = '';
+  String enteredEmergencyContact2 = '';
+  String enteredEmail = '';
+  String enteredPassword = '';
   late UserCredential userCredentials;
+
+  int _currentPage = 0;
+  final PageController _pageController = PageController();
 
   void _signUpHandler(
     String name,
@@ -45,20 +58,91 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       _loading = false;
     });
-    print(res);
+    // print(res);
+  }
+
+  getPersonalDetails({
+    required String name,
+    required String phone,
+    required String emergencyContact1,
+    required String emergencyContact2,
+  }) {
+    enteredName = name;
+    enteredPhone = phone;
+    enteredEmergencyContact1 = enteredEmergencyContact1;
+    enteredEmergencyContact2 = enteredEmergencyContact2;
+  }
+
+  getVehicleDetails({required String vehicleNum}) {
+    //will replace single vehicle_num with list of vehicle numbers
+    enteredVehicleNum = vehicleNum;
+  }
+
+  getSignUpCredentials({
+    required String email,
+    required String password,
+  }) {
+    enteredEmail = email;
+    enteredPassword = password;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _pageController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SignUpForm(
-              signUpHandler: _signUpHandler,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LinearProgressIndicator(
+              backgroundColor: Colors.transparent,
+              value: (_currentPage + 1) / 3,
+              color: Colors.black87,
             ),
-          ),
+            const Expanded(
+              flex: 2,
+              child: Center(
+                child: Text(
+                  'Become a member!',
+                  style: TextStyle(
+                    fontSize: 32,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 6,
+              child: PageView(
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                controller: _pageController,
+                // physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  PersonalDetailsForm(
+                    pageController: _pageController,
+                    getPersonalDetails: getPersonalDetails,
+                  ),
+                  VehicleDetailsForm(
+                    pageController: _pageController,
+                    getVehicleDetails: getVehicleDetails,
+                  ),
+                  SignUpCredentialsForm(
+                    pageController: _pageController,
+                    getSignUpCredentials: getSignUpCredentials,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
