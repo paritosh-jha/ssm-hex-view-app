@@ -11,7 +11,7 @@ class AuthMethods {
     String email,
     String password,
     String phone,
-    String vehicleNum,
+    List<String> vehicleNum,
     String emergencyContact1,
     String emergencyContact2,
   ) async {
@@ -22,6 +22,7 @@ class AuthMethods {
         email: email,
         password: password,
       );
+      
       CollectionReference users = _firestore.collection('users');
       await users.doc(userCredential.user!.uid).set({
         "name": name,

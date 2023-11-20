@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hex_view/shared/widgets/custom_button.dart';
 
 class VehicleDetailsForm extends StatefulWidget {
-  final Function({required String vehicleNum}) getVehicleDetails;
+  final Function({required List<String> vehicleNum}) getVehicleDetails;
 
   final PageController pageController;
   const VehicleDetailsForm(
@@ -25,7 +25,7 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
       curve: Curves.easeInOut,
     );
 
-    widget.getVehicleDetails(vehicleNum: enteredVehicleNum);
+    widget.getVehicleDetails(vehicleNum: addedVehicles);
   }
 
   addVehicleNumber() {

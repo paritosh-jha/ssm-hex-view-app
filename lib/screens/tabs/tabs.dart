@@ -23,9 +23,10 @@ class _TabsScreenState extends State<TabsScreen> {
 
   void fecthUserData() async {
     model.User? currentUserData = await UserMethods().getUserDetails();
+
     if (currentUserData == null) {
       //handle null case
-      print('Obj is NULL');
+      print('Curr User Obj is NULL');
       return;
     }
 

@@ -14,13 +14,14 @@ class UserMethods {
           .doc(_auth.currentUser!.uid)
           .get();
       Map<String, dynamic> userDetails = doc.data() as Map<String, dynamic>;
+
       currentUser = model.User(
-        vehicleNum: userDetails['vehicle_num'],
         name: userDetails['name'],
         phone: userDetails['phone'],
         email: userDetails['email'],
+        vehicleNum: List<String>.from(userDetails['vehicle_num'] ?? []),
         emergencyContact1: userDetails['emergency_contact1'],
-        emergencyContact2:userDetails['emergency_contact2'] ,
+        emergencyContact2: userDetails['emergency_contact2'],
       );
     } catch (e) {
       return null;

@@ -20,7 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _loading = false;
   String enteredName = '';
   String enteredPhone = '';
-  String enteredVehicleNum = '';
+  List<String> addedVehicleNums = [];
   String enteredEmergencyContact1 = '';
   String enteredEmergencyContact2 = '';
   String enteredEmail = '';
@@ -41,9 +41,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     enteredEmergencyContact2 = enteredEmergencyContact2;
   }
 
-  getVehicleDetails({required String vehicleNum}) {
+  getVehicleDetails({required List<String> vehicleNum}) {
     //will replace single vehicle_num with list of vehicle numbers
-    enteredVehicleNum = vehicleNum;
+    addedVehicleNums = vehicleNum;
   }
 
   getSignUpCredentials({
@@ -59,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       enteredPhone,
       enteredEmail,
       enteredPassword,
-      enteredVehicleNum,
+      addedVehicleNums,
       enteredEmergencyContact1,
       enteredEmergencyContact2,
     );
@@ -71,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String phone,
     String email,
     String password,
-    String vehicleNum,
+    List<String> vehicleNum,
     String emergencyContact1,
     String emergencyContact2,
   ) async {
