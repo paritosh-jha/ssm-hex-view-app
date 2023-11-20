@@ -11,53 +11,56 @@ class GetStartedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FadeInImage(
-                height: 400,
-                placeholder: MemoryImage(kTransparentImage),
-                image: const AssetImage('assets/images/get_started.jpg'),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomTextIconButton(
-                      label: 'Get started',
-                      icon: const Icon(Icons.arrow_right_alt),
-                      onpressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignUpScreen(),
-                          ),
-                        );
-                      },
-                      outlined: false,
-                      iconColor: Colors.white,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomOutlinedTextButton(
-                      label: 'Already a user? Sign in',
-                      onpressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
-                      },
-                      outlined: true,
-                    )
-                  ],
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FadeInImage(
+                  height: 400,
+                  fadeInDuration: const Duration(milliseconds: 300),
+                  placeholder: MemoryImage(kTransparentImage),
+                  image: const AssetImage('assets/images/get_started.jpg'),
                 ),
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomTextIconButton(
+                        label: 'Get started',
+                        icon: const Icon(Icons.arrow_right_alt),
+                        onpressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignUpScreen(),
+                            ),
+                          );
+                        },
+                        outlined: false,
+                        iconColor: Colors.white,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomOutlinedTextButton(
+                        label: 'Already a user? Sign in',
+                        onpressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          );
+                        },
+                        outlined: true,
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

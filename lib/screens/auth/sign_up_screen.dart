@@ -37,8 +37,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }) {
     enteredName = name;
     enteredPhone = phone;
-    enteredEmergencyContact1 = enteredEmergencyContact1;
-    enteredEmergencyContact2 = enteredEmergencyContact2;
+    enteredEmergencyContact1 = emergencyContact1;
+    enteredEmergencyContact2 = emergencyContact2;
   }
 
   getVehicleDetails({required List<String> vehicleNum}) {

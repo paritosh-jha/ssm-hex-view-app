@@ -86,6 +86,17 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
                                   color: Colors.grey.shade200,
                                   child: ListTile(
                                     title: Text(addedVehicles[index]),
+                                    trailing: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          addedVehicles.removeAt(index);
+                                        });
+                                      },
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               );
