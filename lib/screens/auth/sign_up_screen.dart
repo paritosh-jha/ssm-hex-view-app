@@ -4,6 +4,7 @@ import 'package:hex_view/firebase/auth_methods.dart';
 import 'package:hex_view/screens/auth/widgets/personal_details_form.dart';
 import 'package:hex_view/screens/auth/widgets/signup_credentials_form.dart';
 import 'package:hex_view/screens/auth/widgets/vehicle_details_form.dart';
+import 'package:hex_view/screens/tabs/tabs.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -20,46 +21,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String enteredName = '';
   String enteredPhone = '';
   String enteredVehicleNum = '';
-  String enteredVehicleRegNum = '';
   String enteredEmergencyContact1 = '';
   String enteredEmergencyContact2 = '';
   String enteredEmail = '';
   String enteredPassword = '';
-  late UserCredential userCredentials;
 
   int _currentPage = 0;
   final PageController _pageController = PageController();
-
-  void _signUpHandler(
-    String name,
-    String phone,
-    String email,
-    String password,
-    String vehicleNum,
-    String vehicleRegNum,
-    String emergencyContact1,
-    String emergencyContact2,
-  ) async {
-    setState(() {
-      _loading = true;
-    });
-
-    String res = await AuthMethods().signUpUser(
-      name,
-      email,
-      password,
-      phone,
-      vehicleNum,
-      vehicleRegNum,
-      emergencyContact1,
-      emergencyContact2,
-    );
-
-    setState(() {
-      _loading = false;
-    });
-    // print(res);
-  }
 
   getPersonalDetails({
     required String name,
@@ -84,11 +52,52 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }) {
     enteredEmail = email;
     enteredPassword = password;
+
+    //SIGN UP USER HERE
+    _signUpHandler(
+      enteredName,
+      enteredPhone,
+      enteredEmail,
+      enteredPassword,
+      enteredVehicleNum,
+      enteredEmergencyContact1,
+      enteredEmergencyContact2,
+    );
+    Navigator.pop(context);
+  }
+
+  void _signUpHandler(
+    String name,
+    String phone,
+    String email,
+    String password,
+    String vehicleNum,
+    String emergencyContact1,
+    String emergencyContact2,
+  ) async {
+    setState(() {
+      _loading = true;
+    });
+
+    String res = await AuthMethods().signUpUser(
+      name,
+      email,
+      password,
+      phone,
+      vehicleNum,
+      emergencyContact1,
+      emergencyContact2,
+    );
+    if (mounted) {
+      setState(() {
+        _loading = false;
+      });
+    }
+    // print(res);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _pageController.dispose();
   }

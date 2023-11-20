@@ -12,7 +12,6 @@ class AuthMethods {
     String password,
     String phone,
     String vehicleNum,
-    String vehicleRegNum,
     String emergencyContact1,
     String emergencyContact2,
   ) async {
@@ -29,7 +28,6 @@ class AuthMethods {
         "email": email,
         "phone": phone,
         "vehicle_num": vehicleNum,
-        "vehicle_reg_num": vehicleRegNum,
         "emergency_contact1": emergencyContact1,
         "emergency_contact2": emergencyContact2,
       });
@@ -44,8 +42,7 @@ class AuthMethods {
   Future<String> signInUser(String email, String password) async {
     String res = 'Some Error Occured';
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
       res = 'success';
     } on FirebaseAuthException catch (e) {
       res = e.code;

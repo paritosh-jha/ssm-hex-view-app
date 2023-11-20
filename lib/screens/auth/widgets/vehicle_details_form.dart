@@ -17,8 +17,18 @@ class VehicleDetailsForm extends StatefulWidget {
 class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
   final _formKey = GlobalKey<FormState>();
   String enteredVehicleNum = '';
+  List<String> addedVehicles = [];
 
   _onSubmit() {
+    widget.pageController.nextPage(
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+
+    widget.getVehicleDetails(vehicleNum: enteredVehicleNum);
+  }
+
+  addVehicleNumber() {
     final isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
@@ -26,75 +36,129 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
     }
     _formKey.currentState!.save();
 
-    widget.pageController.nextPage(
-      duration: const Duration(milliseconds: 600),
-      curve: Curves.easeInOut,
-    );
+    FocusScope.of(context).unfocus();
 
-    widget.getVehicleDetails(vehicleNum: enteredVehicleNum);
+    addedVehicles.add(enteredVehicleNum);
+    _formKey.currentState!.reset();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
+      child: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
-                width: double.infinity,
-                child: Text(
-                  "Vehicle Details",
-                  style: TextStyle(fontSize: 22),
-                  textAlign: TextAlign.start,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      "Vehicle Details",
+                      style: TextStyle(fontSize: 22),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const Text(
+                    'Added Vechicles',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(
+                    height: 150,
+                    child: addedVehicles.isEmpty
+                        ? const Center(
+                            child: Text('No vehicles added'),
+                          )
+                        : ListView.builder(
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 2),
+                                child: Card(
+                                  color: Colors.grey.shade200,
+                                  child: ListTile(
+                                    title: Text(addedVehicles[index]),
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: addedVehicles.length,
+                          ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Flex(
+                    direction: Axis.horizontal,
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            label: Text('Vehicle Number'),
+                            hintText: 'Enter your vehicle number',
+                          ),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please enter a valid vehicle number';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            enteredVehicleNum = value!;
+                          },
+                        ),
+                      ),
+                      Expanded(
+                          flex: 1,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.black87,
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                              onPressed: addVehicleNumber,
+                            ),
+                          ))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 25,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  label: Text('Vehicle Number'),
-                  hintText: 'Enter your vehicle number',
-                ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Please enter a valid vehicle number';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  enteredVehicleNum = value!;
-                },
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CustomTextIconButton(
-                label: 'Next',
-                icon: const Icon(Icons.arrow_forward_outlined),
-                onpressed: _onSubmit,
-                outlined: false,
-                iconColor: Colors.white,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CustomOutlinedTextButton(
-                label: 'Back',
-                onpressed: () {
-                  widget.pageController.previousPage(
-                    duration: const Duration(milliseconds: 600),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                outlined: true,
+              Column(
+                children: [
+                  CustomTextIconButton(
+                    label: 'Next',
+                    icon: const Icon(Icons.arrow_forward_outlined),
+                    onpressed: _onSubmit,
+                    outlined: false,
+                    iconColor: Colors.white,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  CustomOutlinedTextButton(
+                    label: 'Back',
+                    onpressed: () {
+                      widget.pageController.previousPage(
+                        duration: const Duration(milliseconds: 600),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    outlined: true,
+                  ),
+                ],
               ),
             ],
           ),

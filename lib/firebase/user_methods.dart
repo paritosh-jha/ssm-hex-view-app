@@ -18,7 +18,6 @@ class UserMethods {
         vehicleNum: userDetails['vehicle_num'],
         name: userDetails['name'],
         phone: userDetails['phone'],
-        vehicleRegNum: userDetails['vehicle_reg_num'],
         email: userDetails['email'],
         emergencyContact1: userDetails['emergency_contact1'],
         emergencyContact2:userDetails['emergency_contact2'] ,

@@ -27,8 +27,10 @@ class _SignUpCredentialsFormState extends State<SignUpCredentialsForm> {
     }
     _formKey.currentState!.save();
 
+    FocusScope.of(context).unfocus();
+
     widget.pageController.nextPage(
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
 

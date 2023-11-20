@@ -9,6 +9,7 @@ class PersonalDetailsForm extends StatefulWidget {
     required String emergencyContact2,
   }) getPersonalDetails;
   final PageController pageController;
+
   const PersonalDetailsForm(
       {super.key,
       required this.pageController,
@@ -33,8 +34,10 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
     }
     _formKey.currentState!.save();
 
+    FocusScope.of(context).unfocus();
+
     widget.pageController.nextPage(
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
 
@@ -78,6 +81,7 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
                   }
                   return null;
                 },
+                initialValue: enteredName,
                 onSaved: (value) {
                   enteredName = value!;
                 },
@@ -99,6 +103,7 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
                   }
                   return null;
                 },
+                initialValue: enteredPhone,
                 onSaved: (value) {
                   enteredPhone = value!;
                 },
