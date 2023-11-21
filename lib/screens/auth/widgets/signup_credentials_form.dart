@@ -16,8 +16,11 @@ class SignUpCredentialsForm extends StatefulWidget {
 
 class _SignUpCredentialsFormState extends State<SignUpCredentialsForm> {
   final _formKey = GlobalKey<FormState>();
+  late final TextEditingController _passwordController =
+      TextEditingController();
   String enteredEmail = '';
   String enteredPassword = '';
+  String enteredRepeatedPassword = '';
 
   _onSubmit() {
     final isValid = _formKey.currentState!.validate();
@@ -65,6 +68,7 @@ class _SignUpCredentialsFormState extends State<SignUpCredentialsForm> {
                 decoration: const InputDecoration(
                   label: Text('Email'),
                   hintText: 'Enter your email',
+                  suffixIcon: Icon(Icons.mail),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -80,6 +84,7 @@ class _SignUpCredentialsFormState extends State<SignUpCredentialsForm> {
                 height: 15,
               ),
               TextFormField(
+                controller: _passwordController,
                 decoration: const InputDecoration(
                   label: Text('Password'),
                   hintText: 'Enter your password',
@@ -94,6 +99,26 @@ class _SignUpCredentialsFormState extends State<SignUpCredentialsForm> {
                 },
                 onSaved: (value) {
                   enteredPassword = value!;
+                },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  label: Text('Confirm Password'),
+                  hintText: 'Re-enter your password',
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please re-enter your password';
+                  } else if (value != _passwordController.text) {
+                    return 'Passwords do not match';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  enteredRepeatedPassword = value!;
                 },
               ),
               const SizedBox(
