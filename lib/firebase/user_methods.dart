@@ -19,7 +19,7 @@ class UserMethods {
         name: userDetails['name'],
         phone: userDetails['phone'],
         email: userDetails['email'],
-        vehicleNum: List<String>.from(userDetails['vehicle_num'] ?? []),
+        vehicles: Map<String, String>.from(userDetails['vehicle_num'] ?? {}),
         emergencyContact1: userDetails['emergency_contact1'],
         emergencyContact2: userDetails['emergency_contact2'],
       );

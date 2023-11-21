@@ -95,7 +95,7 @@ class _LoginState extends State<LoginForm> {
               const SizedBox(
                 height: 10,
               ),
-              CustomOutlinedTextButton(
+              CustomTextButton(
                 label: 'Cancel',
                 onpressed: () {
                   Navigator.pop(context);

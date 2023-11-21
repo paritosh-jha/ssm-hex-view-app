@@ -51,6 +51,11 @@ class MyApp extends StatelessWidget {
             fontSize: 16,
           ),
         ),
+        textButtonTheme: const TextButtonThemeData(
+          style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Colors.black87),
+              foregroundColor: MaterialStatePropertyAll(Colors.white)),
+        ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: Colors.black87,
           showUnselectedLabels: false,

@@ -57,11 +57,11 @@ class CustomTextIconButton extends StatelessWidget {
   }
 }
 
-class CustomOutlinedTextButton extends StatelessWidget {
+class CustomTextButton extends StatelessWidget {
   final String label;
   final Function() onpressed;
   final bool outlined;
-  const CustomOutlinedTextButton(
+  const CustomTextButton(
       {super.key,
       required this.label,
       required this.onpressed,

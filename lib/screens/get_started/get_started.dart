@@ -44,7 +44,7 @@ class GetStartedScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      CustomOutlinedTextButton(
+                      CustomTextButton(
                         label: 'Already a user? Sign in',
                         onpressed: () {
                           Navigator.push(

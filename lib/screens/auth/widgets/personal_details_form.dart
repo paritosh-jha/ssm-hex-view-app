@@ -163,7 +163,7 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
               const SizedBox(
                 height: 15,
               ),
-              CustomOutlinedTextButton(
+              CustomTextButton(
                 label: 'Cancel',
                 onpressed: () {
                   Navigator.pop(context);

@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:hex_view/screens/auth/widgets/vehicle_detail_bottom_sheet.dart';
 import 'package:hex_view/shared/widgets/custom_button.dart';
 
 class VehicleDetailsForm extends StatefulWidget {
-  final Function({required List<String> vehicleNum}) getVehicleDetails;
+  final Function({required Map<String, String> vehicleNum}) getVehicleDetails;
 
   final PageController pageController;
   const VehicleDetailsForm(
@@ -15,31 +18,53 @@ class VehicleDetailsForm extends StatefulWidget {
 }
 
 class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
-  final _formKey = GlobalKey<FormState>();
-  String enteredVehicleNum = '';
-  List<String> addedVehicles = [];
+  Map<String, String> addedVehicles = {};
 
   _onSubmit() {
-    widget.pageController.nextPage(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
+    if (addedVehicles.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Alert'),
+            content: const Text('Please add atleast one vehicle'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Ok'),
+              )
+            ],
+          );
+        },
+      );
+    } else {
+      widget.pageController.nextPage(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
 
-    widget.getVehicleDetails(vehicleNum: addedVehicles);
+      widget.getVehicleDetails(vehicleNum: addedVehicles);
+    }
   }
 
-  addVehicleNumber() {
-    final isValid = _formKey.currentState!.validate();
+  showAddVehicleBottomModal() {
+    showBottomSheet(
+      elevation: 1,
+      enableDrag: true,
+      context: context,
+      builder: (BuildContext context) {
+        return VehicleDeatilsBottomSheet(
+          addVehicle: addVehicle,
+        );
+      },
+    );
+  }
 
-    if (!isValid) {
-      return null;
-    }
-    _formKey.currentState!.save();
-
-    FocusScope.of(context).unfocus();
-
-    addedVehicles.add(enteredVehicleNum);
-    _formKey.currentState!.reset();
+  addVehicle({required String vehicleNum, required String vehicleNickname}) {
+    print(vehicleNickname);
+    addedVehicles[vehicleNickname] = vehicleNum;
     setState(() {});
   }
 
@@ -47,9 +72,9 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -79,17 +104,22 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
                           )
                         : ListView.builder(
                             itemBuilder: (context, index) {
+                              final entry =
+                                  addedVehicles.entries.elementAt(index);
+                              final vehicleNickname = entry.key;
+                              final vehicleNumber = entry.value;
                               return Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 2),
                                 child: Card(
                                   color: Colors.grey.shade200,
                                   child: ListTile(
-                                    title: Text(addedVehicles[index]),
+                                    title: Text(vehicleNickname),
+                                    subtitle: Text(vehicleNumber),
                                     trailing: IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          addedVehicles.removeAt(index);
+                                          addedVehicles.remove(vehicleNickname);
                                         });
                                       },
                                       icon: const Icon(
@@ -107,41 +137,6 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
                   const SizedBox(
                     height: 25,
                   ),
-                  Flex(
-                    direction: Axis.horizontal,
-                    children: [
-                      Expanded(
-                        flex: 4,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            label: Text('Vehicle Number'),
-                            hintText: 'Enter your vehicle number',
-                          ),
-                          validator: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return 'Please enter a valid vehicle number';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            enteredVehicleNum = value!;
-                          },
-                        ),
-                      ),
-                      Expanded(
-                          flex: 1,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.black87,
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                              onPressed: addVehicleNumber,
-                            ),
-                          ))
-                    ],
-                  ),
                   const SizedBox(
                     height: 25,
                   ),
@@ -149,6 +144,16 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
               ),
               Column(
                 children: [
+                  CustomTextButton(
+                    label: 'Add Vehicle',
+                    onpressed: () {
+                      showAddVehicleBottomModal();
+                    },
+                    outlined: true,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   CustomTextIconButton(
                     label: 'Next',
                     icon: const Icon(Icons.arrow_forward_outlined),
@@ -159,7 +164,7 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
                   const SizedBox(
                     height: 15,
                   ),
-                  CustomOutlinedTextButton(
+                  CustomTextButton(
                     label: 'Back',
                     onpressed: () {
                       widget.pageController.previousPage(

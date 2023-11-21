@@ -20,7 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _loading = false;
   String enteredName = '';
   String enteredPhone = '';
-  List<String> addedVehicleNums = [];
+  Map<String, String> addedVehicles = {};
   String enteredEmergencyContact1 = '';
   String enteredEmergencyContact2 = '';
   String enteredEmail = '';
@@ -41,9 +41,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     enteredEmergencyContact2 = emergencyContact2;
   }
 
-  getVehicleDetails({required List<String> vehicleNum}) {
+  getVehicleDetails({required Map<String, String> vehicleNum}) {
     //will replace single vehicle_num with list of vehicle numbers
-    addedVehicleNums = vehicleNum;
+    addedVehicles = vehicleNum;
   }
 
   getSignUpCredentials({
@@ -59,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       enteredPhone,
       enteredEmail,
       enteredPassword,
-      addedVehicleNums,
+      addedVehicles,
       enteredEmergencyContact1,
       enteredEmergencyContact2,
     );
@@ -71,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String phone,
     String email,
     String password,
-    List<String> vehicleNum,
+    Map<String, String> vehicleNum,
     String emergencyContact1,
     String emergencyContact2,
   ) async {
@@ -95,11 +95,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     // print(res);
   }
+  
 
   @override
   void dispose() {
-    super.dispose();
     _pageController.dispose();
+    super.dispose();
   }
 
   @override

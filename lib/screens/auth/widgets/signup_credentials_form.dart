@@ -44,6 +44,12 @@ class _SignUpCredentialsFormState extends State<SignUpCredentialsForm> {
   }
 
   @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -134,7 +140,7 @@ class _SignUpCredentialsFormState extends State<SignUpCredentialsForm> {
               const SizedBox(
                 height: 15,
               ),
-              CustomOutlinedTextButton(
+              CustomTextButton(
                 label: 'Back',
                 onpressed: () {
                   widget.pageController.previousPage(
