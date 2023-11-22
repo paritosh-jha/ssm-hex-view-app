@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hex_view/screens/qr_requests/qr_requests.dart';
 
 class VehicleList extends StatelessWidget {
   final Map<String, String> vehicles;
@@ -35,6 +36,16 @@ class VehicleList extends StatelessWidget {
                       FontAwesomeIcons.angleRight,
                       size: 15,
                     ),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => QRRequestsScreen(
+                            vehicleNumber: vehicleNumber,
+                            vehicleNickname: vehicleNickname,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               );
