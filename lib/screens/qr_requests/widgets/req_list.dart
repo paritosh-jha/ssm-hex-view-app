@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hex_view/model/request_message.dart';
 import 'package:hex_view/screens/qr_requests/widgets/req_card.dart';
 import 'package:hex_view/screens/qr_requests/widgets/req_overlay.dart';
+import 'package:hex_view/shared/widgets/custom_loader.dart';
 
 class RequestList extends StatefulWidget {
   const RequestList({super.key});
@@ -80,7 +81,7 @@ class _RequestListState extends State<RequestList> {
       builder: (context, messageSnapshots) {
         if (messageSnapshots.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CustomLoader(),
           );
         }
 

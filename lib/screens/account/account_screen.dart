@@ -3,8 +3,10 @@ import 'package:hex_view/firebase/auth_methods.dart';
 import 'package:hex_view/model/user.dart' as model;
 
 class AccountScreen extends StatefulWidget {
+  final model.User userData;
   const AccountScreen({
     super.key,
+    required this.userData,
   });
 
   @override
@@ -24,7 +26,7 @@ class _AccountScreenState extends State<AccountScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'User',
+                widget.userData.name,
                 style: const TextStyle(fontSize: 24),
               ),
               const CircleAvatar(

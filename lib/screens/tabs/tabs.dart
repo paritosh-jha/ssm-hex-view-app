@@ -17,6 +17,8 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   int selectedPageIndex = 0;
   bool isUserDataAvailible = false;
+  late model.User? userData;
+
   void _selectedPage(int index) {
     setState(() {
       selectedPageIndex = index;
@@ -24,8 +26,8 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 
   void fetchUserData() async {
-    model.User? currentUserData = await UserMethods().getUserDetails();
-    if (currentUserData == null) {
+    userData = await UserMethods().getUserDetails();
+    if (userData == null) {
       //handle null case
       print('Curr User Obj is NULL');
       return;
@@ -50,7 +52,7 @@ class _TabsScreenState extends State<TabsScreen> {
       activePage = const QrConnectVehicleList();
       activePageTitle = 'QR Connect';
     } else if (selectedPageIndex == 2) {
-      activePage = const AccountScreen();
+      activePage = AccountScreen(userData: userData!,);
       activePageTitle = 'Account';
     }
 
