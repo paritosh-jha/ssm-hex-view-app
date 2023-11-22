@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hex_view/firebase/user_methods.dart';
 import 'package:hex_view/screens/account/account_screen.dart';
 import 'package:hex_view/screens/home/home.dart';
-import 'package:hex_view/screens/qr_connect/qr_connect.dart';
 import 'package:hex_view/model/user.dart' as model;
+import 'package:hex_view/screens/qr_connect/qr_connect.dart';
+import 'package:hex_view/shared/widgets/custom_loader.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -21,15 +23,13 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
-  void fecthUserData() async {
+  void fetchUserData() async {
     model.User? currentUserData = await UserMethods().getUserDetails();
-
     if (currentUserData == null) {
       //handle null case
       print('Curr User Obj is NULL');
       return;
     }
-
     setState(() {
       isUserDataAvailible = true;
     });
@@ -38,7 +38,7 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   void initState() {
     super.initState();
-    fecthUserData();
+    fetchUserData();
   }
 
   @override
@@ -47,7 +47,7 @@ class _TabsScreenState extends State<TabsScreen> {
     String activePageTitle = 'Hex Zone';
 
     if (selectedPageIndex == 1) {
-      activePage = const QRConnectScreen();
+      activePage = const QrConnectVehicleList();
       activePageTitle = 'QR Connect';
     } else if (selectedPageIndex == 2) {
       activePage = const AccountScreen();
@@ -59,11 +59,8 @@ class _TabsScreenState extends State<TabsScreen> {
         title: Text(activePageTitle),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: isUserDataAvailible
-            ? activePage
-            : const Center(child: CircularProgressIndicator()),
-      ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: isUserDataAvailible ? activePage : const CustomLoader()),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedPageIndex,
         onTap: (index) {
