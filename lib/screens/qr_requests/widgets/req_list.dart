@@ -7,7 +7,8 @@ import 'package:hex_view/screens/qr_requests/widgets/req_overlay.dart';
 import 'package:hex_view/shared/widgets/custom_loader.dart';
 
 class RequestList extends StatefulWidget {
-  const RequestList({super.key});
+  final String vehicleNumber;
+  const RequestList({super.key, required this.vehicleNumber});
 
   @override
   State<RequestList> createState() => _RequestListState();
@@ -101,22 +102,24 @@ class _RequestListState extends State<RequestList> {
               messageData[currentUser!.uid] as Map<dynamic, dynamic>;
 
           userMessages.forEach((messageKey, messageData) {
-            Coordinates coordinates = Coordinates(
-              latitude: messageData['coordinates']['lat'].toString(),
-              longitude: messageData['coordinates']['lng'].toString(),
-            );
+            if (messageData['vehicleNum'] == widget.vehicleNumber) {
+              Coordinates coordinates = Coordinates(
+                latitude: messageData['coordinates']['lat'].toString(),
+                longitude: messageData['coordinates']['lng'].toString(),
+              );
 
-            RequestMessages currentMessage = RequestMessages(
-                key: messageKey,
-                description: messageData['desc'].toString(),
-                category: messageData['radioOptions'].toString(),
-                contactNumber: messageData['contactValue'].toString(),
-                timeStamp:
-                    DateTime.fromMillisecondsSinceEpoch(messageData['time']),
-                isCallRequested: messageData['requestCall'].toString(),
-                isRead: messageData['viewed'].toString(),
-                coordinates: coordinates);
-            messages.add(currentMessage);
+              RequestMessages currentMessage = RequestMessages(
+                  key: messageKey,
+                  description: messageData['desc'].toString(),
+                  category: messageData['radioOptions'].toString(),
+                  contactNumber: messageData['contactValue'].toString(),
+                  timeStamp:
+                      DateTime.fromMillisecondsSinceEpoch(messageData['time']),
+                  isCallRequested: messageData['requestCall'].toString(),
+                  isRead: messageData['viewed'].toString(),
+                  coordinates: coordinates);
+              messages.add(currentMessage);
+            }
           });
         }
 

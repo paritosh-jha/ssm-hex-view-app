@@ -20,41 +20,47 @@ class _QRRequestsScreenState extends State<QRRequestsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.vehicleNickname),
-      ),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Requests",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: RequestList(),
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.vehicleNickname),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) =>
-                  QrGeneratorScreen(vehicleNumber: widget.vehicleNumber),
-            ),
-          );
-        },
-        child: const Icon(
-          Icons.qr_code,
-          color: Colors.white,
-          size: 30,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Requests",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: RequestList(
+                  vehicleNumber: widget.vehicleNumber,
+                ),
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                    QrGeneratorScreen(vehicleNumber: widget.vehicleNumber),
+              ),
+            );
+          },
+          child: const Icon(
+            Icons.qr_code,
+            color: Colors.white,
+            size: 30,
+          ),
         ),
       ),
     );

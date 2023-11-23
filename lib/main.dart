@@ -61,7 +61,8 @@ class MyApp extends StatelessWidget {
             showUnselectedLabels: false,
           ),
           floatingActionButtonTheme: const FloatingActionButtonThemeData(
-              backgroundColor: Colors.black87)),
+              backgroundColor: Colors.black87),
+          useMaterial3: true),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {

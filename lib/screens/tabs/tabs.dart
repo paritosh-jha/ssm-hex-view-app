@@ -52,37 +52,43 @@ class _TabsScreenState extends State<TabsScreen> {
       activePage = const QrConnectVehicleList();
       activePageTitle = 'QR Connect';
     } else if (selectedPageIndex == 2) {
-      activePage = AccountScreen(userData: userData!,);
+      activePage = AccountScreen(
+        userData: userData!,
+      );
       activePageTitle = 'Account';
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(activePageTitle),
-      ),
-      body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: isUserDataAvailible ? activePage : const CustomLoader()),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedPageIndex,
-        onTap: (index) {
-          _selectedPage(index);
-        },
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-              ),
-              label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.qr_code),
-            label: 'QR',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Account',
-          ),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(activePageTitle),
+        ),
+        body: SafeArea(
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: isUserDataAvailible ? activePage : const CustomLoader()),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: selectedPageIndex,
+          onTap: (index) {
+            _selectedPage(index);
+          },
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.home,
+                ),
+                label: 'Home'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.qr_code),
+              label: 'QR',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Account',
+            ),
+          ],
+        ),
       ),
     );
   }
