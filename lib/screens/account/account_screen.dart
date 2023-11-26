@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hex_view/firebase/auth_methods.dart';
 import 'package:hex_view/model/user.dart' as model;
+import 'package:hex_view/screens/emergency_contact/emergency_contact.dart';
 
 class AccountScreen extends StatefulWidget {
   final model.User userData;
@@ -50,7 +51,10 @@ class _AccountScreenState extends State<AccountScreen> {
           ListTile(
             leading: const Icon(Icons.emergency),
             title: const Text('Emergency Contact'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const EmergencyContactScreen()));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.logout),

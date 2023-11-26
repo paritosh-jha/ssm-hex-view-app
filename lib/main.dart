@@ -53,8 +53,9 @@ class MyApp extends StatelessWidget {
           ),
           textButtonTheme: const TextButtonThemeData(
             style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.black87),
-                foregroundColor: MaterialStatePropertyAll(Colors.white)),
+              backgroundColor: MaterialStatePropertyAll(Colors.black87),
+              foregroundColor: MaterialStatePropertyAll(Colors.white),
+            ),
           ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             selectedItemColor: Colors.black87,
@@ -62,6 +63,10 @@ class MyApp extends StatelessWidget {
           ),
           floatingActionButtonTheme: const FloatingActionButtonThemeData(
               backgroundColor: Colors.black87),
+          cardTheme: CardTheme(
+            color: Colors.grey.shade200,
+            elevation: 0,
+          ),
           useMaterial3: true),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
