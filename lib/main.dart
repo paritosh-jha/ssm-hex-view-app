@@ -25,49 +25,49 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Hex View',
       theme: ThemeData().copyWith(
-          scaffoldBackgroundColor: Colors.white,
-          textTheme: GoogleFonts.latoTextTheme(),
-          appBarTheme: const AppBarTheme().copyWith(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              foregroundColor: Colors.black87),
-          inputDecorationTheme: InputDecorationTheme(
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: Colors.black87,
-                width: 2,
-              ),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
-                color: Colors.blueGrey.shade200,
-                width: 2,
-              ),
-            ),
-            labelStyle: const TextStyle(
-              color: Colors.black87,
-              fontSize: 16,
-            ),
-          ),
-          textButtonTheme: const TextButtonThemeData(
-            style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Colors.black87),
-              foregroundColor: MaterialStatePropertyAll(Colors.white),
-            ),
-          ),
-          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            selectedItemColor: Colors.black87,
-            showUnselectedLabels: false,
-          ),
-          floatingActionButtonTheme: const FloatingActionButtonThemeData(
-              backgroundColor: Colors.black87),
-          cardTheme: CardTheme(
-            color: Colors.grey.shade200,
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: GoogleFonts.latoTextTheme(),
+        appBarTheme: const AppBarTheme().copyWith(
+            backgroundColor: Colors.transparent,
             elevation: 0,
+            foregroundColor: Colors.black87),
+        inputDecorationTheme: InputDecorationTheme(
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(
+              color: Colors.black87,
+              width: 2,
+            ),
           ),
-          useMaterial3: true),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.blueGrey.shade200,
+              width: 2,
+            ),
+          ),
+          labelStyle: const TextStyle(
+            color: Colors.black87,
+            fontSize: 16,
+          ),
+        ),
+        textButtonTheme: const TextButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(Colors.black87),
+            foregroundColor: MaterialStatePropertyAll(Colors.white),
+          ),
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          selectedItemColor: Colors.black87,
+          showUnselectedLabels: false,
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: Colors.black87),
+        cardTheme: CardTheme(
+          color: Colors.grey.shade200,
+          elevation: 0,
+        ),
+      ),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {

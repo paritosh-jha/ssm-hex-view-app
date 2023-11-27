@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hex_view/firebase/auth_methods.dart';
-
 import 'package:hex_view/screens/auth/widgets/login_form.dart';
+import 'package:hex_view/shared/widgets/custom_loader.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,10 +14,8 @@ class _LoginScreenState extends State<LoginScreen> {
   // ignore: unused_field
   bool _loading = false;
 
-  void _signInHandler(
-    String email,
-    String password,
-  ) async {
+  void _signInHandler(String email, String password) async {
+    FocusScope.of(context).unfocus();
     setState(() {
       _loading = true;
     });
@@ -27,10 +25,31 @@ class _LoginScreenState extends State<LoginScreen> {
       password,
     );
 
+    if (res == 'success') {
+      await navigateToHomeScreen();
+    }
     setState(() {
       _loading = false;
     });
-    print(res);
+    showSnackBar(res, context);
+  }
+
+  navigateToHomeScreen() {
+    Navigator.of(context).pop();
+  }
+
+  showSnackBar(String res, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          res,
+          style: const TextStyle(color: Colors.black87),
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor:
+            res == 'success' ? Colors.greenAccent : Colors.redAccent,
+      ),
+    );
   }
 
   @override
@@ -40,9 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: LoginForm(
-              signInHandler: _signInHandler,
-            ),
+            child: _loading
+                ? const CustomLoader()
+                : LoginForm(
+                    signInHandler: _signInHandler,
+                  ),
           ),
         ),
       ),

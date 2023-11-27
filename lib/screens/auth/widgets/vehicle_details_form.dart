@@ -97,7 +97,7 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(
-                    height: 150,
+                    height: 200,
                     child: addedVehicles.isEmpty
                         ? const Center(
                             child: Text('No vehicles added'),

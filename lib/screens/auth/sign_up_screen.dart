@@ -4,7 +4,7 @@ import 'package:hex_view/firebase/auth_methods.dart';
 import 'package:hex_view/screens/auth/widgets/personal_details_form.dart';
 import 'package:hex_view/screens/auth/widgets/signup_credentials_form.dart';
 import 'package:hex_view/screens/auth/widgets/vehicle_details_form.dart';
-import 'package:hex_view/screens/tabs/tabs.dart';
+import 'package:hex_view/shared/widgets/custom_loader.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -75,6 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String emergencyContact1,
     String emergencyContact2,
   ) async {
+    FocusScope.of(context).unfocus();
     setState(() {
       _loading = true;
     });
@@ -88,12 +89,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
       emergencyContact1,
       emergencyContact2,
     );
+    if (res == 'success') {
+      await navigateToHomeScreen();
+    }
     if (mounted) {
       setState(() {
         _loading = false;
       });
+      showSnackBar(res, context);
     }
-    // print(res);
+  }
+
+  navigateToHomeScreen() {
+    Navigator.of(context).pop();
+  }
+
+  showSnackBar(String res, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          res,
+          style: const TextStyle(color: Colors.black87),
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor:
+            res == 'success' ? Colors.greenAccent : Colors.redAccent,
+      ),
+    );
   }
 
   @override
@@ -106,53 +128,55 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            LinearProgressIndicator(
-              backgroundColor: Colors.transparent,
-              value: (_currentPage + 1) / 3,
-              color: Colors.black87,
-            ),
-            const Expanded(
-              flex: 2,
-              child: Center(
-                child: Text(
-                  'Become a member!',
-                  style: TextStyle(
-                    fontSize: 32,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 6,
-              child: PageView(
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentPage = index;
-                  });
-                },
-                controller: _pageController,
-                // physics: const NeverScrollableScrollPhysics(),
+        child: _loading
+            ? const CustomLoader()
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  PersonalDetailsForm(
-                    pageController: _pageController,
-                    getPersonalDetails: getPersonalDetails,
+                  LinearProgressIndicator(
+                    backgroundColor: Colors.transparent,
+                    value: (_currentPage + 1) / 3,
+                    color: Colors.black87,
                   ),
-                  VehicleDetailsForm(
-                    pageController: _pageController,
-                    getVehicleDetails: getVehicleDetails,
+                  const Expanded(
+                    flex: 2,
+                    child: Center(
+                      child: Text(
+                        'Become a member!',
+                        style: TextStyle(
+                          fontSize: 32,
+                        ),
+                      ),
+                    ),
                   ),
-                  SignUpCredentialsForm(
-                    pageController: _pageController,
-                    getSignUpCredentials: getSignUpCredentials,
+                  Expanded(
+                    flex: 6,
+                    child: PageView(
+                      onPageChanged: (index) {
+                        setState(() {
+                          _currentPage = index;
+                        });
+                      },
+                      controller: _pageController,
+                      // physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        PersonalDetailsForm(
+                          pageController: _pageController,
+                          getPersonalDetails: getPersonalDetails,
+                        ),
+                        VehicleDetailsForm(
+                          pageController: _pageController,
+                          getVehicleDetails: getVehicleDetails,
+                        ),
+                        SignUpCredentialsForm(
+                          pageController: _pageController,
+                          getSignUpCredentials: getSignUpCredentials,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

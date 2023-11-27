@@ -15,6 +15,43 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  showLogOutDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Please Confirm'),
+        content: const Text('Do you wish to log out?'),
+        actions: [
+          TextButton(
+            style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.transparent),
+                foregroundColor: MaterialStatePropertyAll(Colors.redAccent)),
+            onPressed: () {
+              AuthMethods().signOutUser();
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              'Yes',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          TextButton(
+            style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.transparent),
+                foregroundColor: MaterialStatePropertyAll(Colors.black87)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              'No',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -60,7 +97,7 @@ class _AccountScreenState extends State<AccountScreen> {
             leading: const Icon(Icons.logout),
             title: const Text('Sign Out'),
             onTap: () {
-              AuthMethods().signOutUser();
+              showLogOutDialog();
             },
           ),
         ],

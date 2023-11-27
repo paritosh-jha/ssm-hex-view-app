@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hex_view/firebase/user_methods.dart';
 import 'package:hex_view/screens/account/account_screen.dart';
 import 'package:hex_view/screens/home/home.dart';
@@ -29,7 +28,7 @@ class _TabsScreenState extends State<TabsScreen> {
     userData = await UserMethods().getUserDetails();
     if (userData == null) {
       //handle null case
-      print('Curr User Obj is NULL');
+      // print('Curr User Obj is NULL');
       return;
     }
     setState(() {

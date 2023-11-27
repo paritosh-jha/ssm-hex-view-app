@@ -128,7 +128,7 @@ class _SignUpCredentialsFormState extends State<SignUpCredentialsForm> {
                 },
               ),
               const SizedBox(
-                height: 15,
+                height: 25,
               ),
               CustomTextIconButton(
                 label: 'Sign up',
