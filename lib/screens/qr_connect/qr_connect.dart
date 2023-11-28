@@ -36,25 +36,31 @@ class _QrConnectVehicleListState extends State<QrConnectVehicleList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: !userDataReady
-          ? const CustomLoader()
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Your vehicles',
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Expanded(
-                  child: VehicleList(
-                    vehicles: userData!.vehicles,
+      appBar: AppBar(
+        title: const Text('Requests'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: !userDataReady
+            ? const CustomLoader()
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Your vehicles',
+                    style: TextStyle(fontSize: 16),
                   ),
-                ),
-              ],
-            ),
-    );
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Expanded(
+                    child: VehicleList(
+                      vehicles: userData!.vehicles,
+                    ),
+                  ),
+                ],
+              ),
+      ),
+     );
   }
 }

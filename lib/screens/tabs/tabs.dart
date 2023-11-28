@@ -1,5 +1,7 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_view/firebase/user_methods.dart';
+import 'package:hex_view/firebase/util_methods.dart';
 import 'package:hex_view/screens/account/account_screen.dart';
 import 'package:hex_view/screens/home/home.dart';
 import 'package:hex_view/model/user.dart' as model;
@@ -40,32 +42,25 @@ class _TabsScreenState extends State<TabsScreen> {
   void initState() {
     super.initState();
     fetchUserData();
+    UtilMethods().setUpPushNotifications();
   }
 
   @override
   Widget build(BuildContext context) {
     Widget activePage = const HomeScreen();
-    String activePageTitle = 'Hex Zone';
 
     if (selectedPageIndex == 1) {
       activePage = const QrConnectVehicleList();
-      activePageTitle = 'QR Connect';
     } else if (selectedPageIndex == 2) {
       activePage = AccountScreen(
         userData: userData!,
       );
-      activePageTitle = 'Account';
     }
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(activePageTitle),
-        ),
         body: SafeArea(
-          child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: isUserDataAvailible ? activePage : const CustomLoader()),
+          child: isUserDataAvailible ? activePage : const CustomLoader(),
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedPageIndex,
@@ -75,15 +70,17 @@ class _TabsScreenState extends State<TabsScreen> {
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.home,
+                  FluentIcons.home_20_regular,
                 ),
                 label: 'Home'),
             BottomNavigationBarItem(
-              icon: Icon(Icons.qr_code),
-              label: 'QR',
+              icon: Icon(
+                FluentIcons.chat_20_regular,
+              ),
+              label: 'Requests',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(FluentIcons.person_20_regular),
               label: 'Account',
             ),
           ],

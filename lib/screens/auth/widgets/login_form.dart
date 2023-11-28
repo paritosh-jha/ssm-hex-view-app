@@ -87,7 +87,7 @@ class _LoginState extends State<LoginForm> {
               ),
               CustomTextIconButton(
                 label: 'Sign in',
-                icon: const Icon(Icons.arrow_forward_rounded),
+                icon: Icons.arrow_forward_rounded,
                 iconColor: Colors.white,
                 outlined: false,
                 onpressed: _onSubmit,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTextIconButton extends StatelessWidget {
   final String label;
-  final Icon icon;
+  final IconData icon;
   final Color iconColor;
   final Function() onpressed;
   final bool outlined;
@@ -22,6 +22,8 @@ class CustomTextIconButton extends StatelessWidget {
       child: TextButton(
         onPressed: onpressed,
         style: ButtonStyle(
+          shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
           backgroundColor: outlined
               ? const MaterialStatePropertyAll(Colors.white)
               : const MaterialStatePropertyAll(Colors.black87),
@@ -46,7 +48,7 @@ class CustomTextIconButton extends StatelessWidget {
               width: 5,
             ),
             Icon(
-              Icons.arrow_forward_outlined,
+              icon,
               color: outlined ? Colors.black87 : iconColor,
               size: 18,
             )
@@ -75,6 +77,8 @@ class CustomTextButton extends StatelessWidget {
       child: TextButton(
         onPressed: onpressed,
         style: ButtonStyle(
+          shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
           backgroundColor: outlined
               ? const MaterialStatePropertyAll(Colors.white)
               : const MaterialStatePropertyAll(Colors.black87),

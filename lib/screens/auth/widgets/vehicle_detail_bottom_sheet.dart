@@ -109,7 +109,7 @@ class _VehicleDeatilsBottomSheetState extends State<VehicleDeatilsBottomSheet> {
                   children: [
                     CustomTextIconButton(
                       label: 'Add',
-                      icon: const Icon(Icons.arrow_forward_outlined),
+                      icon: Icons.arrow_forward_outlined,
                       onpressed: _submit,
                       outlined: false,
                       iconColor: Colors.white,

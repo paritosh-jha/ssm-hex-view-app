@@ -66,6 +66,9 @@ class _RequestListState extends State<RequestList> {
         .ref()
         .child('messages/${currentUser!.uid}/${requestMessage.key}')
         .remove();
+    if (mounted) {
+      Navigator.pop(context);
+    }
   }
 
   convertMessageStatus(RequestMessages requestMessage) async {
@@ -89,7 +92,7 @@ class _RequestListState extends State<RequestList> {
         if (!messageSnapshots.hasData ||
             messageSnapshots.data!.snapshot.value == null) {
           return const Center(
-            child: Text("No new requests..."),
+            child: Text("No new requests!"),
           );
         }
 
@@ -125,7 +128,7 @@ class _RequestListState extends State<RequestList> {
 
         if (messages.isEmpty) {
           return const Center(
-            child: Text("No new requests for you..."),
+            child: Text("No new requests!"),
           );
         }
 

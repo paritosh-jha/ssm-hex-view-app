@@ -156,7 +156,7 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
                   ),
                   CustomTextIconButton(
                     label: 'Next',
-                    icon: const Icon(Icons.arrow_forward_outlined),
+                    icon: Icons.arrow_forward_outlined,
                     onpressed: _onSubmit,
                     outlined: false,
                     iconColor: Colors.white,

@@ -30,12 +30,6 @@ class _QRRequestsScreenState extends State<QRRequestsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Requests",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
               const SizedBox(
                 height: 20,
               ),

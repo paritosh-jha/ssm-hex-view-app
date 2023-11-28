@@ -29,7 +29,7 @@ class GetStartedScreen extends StatelessWidget {
                     children: [
                       CustomTextIconButton(
                         label: 'Get started',
-                        icon: const Icon(Icons.arrow_right_alt),
+                        icon: Icons.arrow_right_alt,
                         onpressed: () {
                           Navigator.push(
                             context,

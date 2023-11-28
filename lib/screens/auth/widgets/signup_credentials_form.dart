@@ -132,7 +132,7 @@ class _SignUpCredentialsFormState extends State<SignUpCredentialsForm> {
               ),
               CustomTextIconButton(
                 label: 'Sign up',
-                icon: const Icon(Icons.arrow_forward_outlined),
+                icon: Icons.arrow_forward_outlined,
                 onpressed: _onSubmit,
                 outlined: false,
                 iconColor: Colors.white,
