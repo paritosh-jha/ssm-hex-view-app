@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hex_view/firebase/auth_methods.dart';
 import 'package:hex_view/screens/auth/widgets/login_form.dart';
+import 'package:hex_view/screens/tabs/tabs.dart';
 import 'package:hex_view/shared/widgets/custom_loader.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,7 +12,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // ignore: unused_field
   bool _loading = false;
 
   void _signInHandler(String email, String password) async {
@@ -28,9 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (res == 'success') {
       await navigateToHomeScreen();
     }
-    setState(() {
-      _loading = false;
-    });
+    
     showSnackBar(res, context);
   }
 

@@ -24,6 +24,9 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
   String enteredName = '';
   String enteredPhone = '';
   String enteredEmergencyContact1 = '';
+  String enteredEmergencyContactName1 = '';
+  String enteredEmergencyContactName2 = '';
+
   String enteredEmergencyContact2 = '';
 
   _onSubmit() {
@@ -70,9 +73,16 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
               const SizedBox(
                 height: 25,
               ),
+              Container(
+                padding: const EdgeInsets.only(left: 5),
+                width: double.infinity,
+                child: const Text(
+                  'Name',
+                  textAlign: TextAlign.start,
+                ),
+              ),
               TextFormField(
                 decoration: const InputDecoration(
-                  label: Text('Name'),
                   hintText: 'Enter your name',
                 ),
                 validator: (value) {
@@ -89,9 +99,16 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
               const SizedBox(
                 height: 15,
               ),
+              Container(
+                padding: const EdgeInsets.only(left: 5),
+                width: double.infinity,
+                child: const Text(
+                  'Phone',
+                  textAlign: TextAlign.start,
+                ),
+              ),
               TextFormField(
                 decoration: const InputDecoration(
-                  label: Text('Phone'),
                   hintText: 'Enter your phone number',
                 ),
                 validator: (value) {
@@ -111,44 +128,110 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
               const SizedBox(
                 height: 15,
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Emergency Contact 1',
+              Container(
+                padding: const EdgeInsets.only(left: 5),
+                width: double.infinity,
+                child: const Text(
+                  'Emergency Info - 1',
+                  textAlign: TextAlign.start,
                 ),
-                autocorrect: false,
-                validator: (value) {
-                  if (value == null ||
-                      value.trim().isEmpty ||
-                      value.length < 10 ||
-                      value.length > 10) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  enteredEmergencyContact1 = value!;
-                },
+              ),
+              Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      decoration: const InputDecoration(hintText: 'Enter name'),
+                      autocorrect: false,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Please enter a valid name';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        enteredEmergencyContactName1 = value!;
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: TextFormField(
+                      decoration:
+                          const InputDecoration(hintText: 'Enter Contact'),
+                      autocorrect: false,
+                      validator: (value) {
+                        if (value == null ||
+                            value.trim().isEmpty ||
+                            value.length < 10 ||
+                            value.length > 10) {
+                          return 'Please enter a valid number';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        enteredEmergencyContact1 = value!;
+                      },
+                    ),
+                  )
+                ],
               ),
               const SizedBox(
                 height: 15,
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Emergency Contact 2',
+              Container(
+                padding: const EdgeInsets.only(left: 5),
+                width: double.infinity,
+                child: const Text(
+                  'Emergency Info - 2',
+                  textAlign: TextAlign.start,
                 ),
-                autocorrect: false,
-                validator: (value) {
-                  if (value == null ||
-                      value.trim().isEmpty ||
-                      value.length < 10 ||
-                      value.length > 10) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  enteredEmergencyContact2 = value!;
-                },
+              ),
+              Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      decoration: const InputDecoration(hintText: 'Enter name'),
+                      autocorrect: false,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Please enter a valid name';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        enteredEmergencyContactName2 = value!;
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: TextFormField(
+                      decoration:
+                          const InputDecoration(hintText: 'Enter Contact'),
+                      autocorrect: false,
+                      validator: (value) {
+                        if (value == null ||
+                            value.trim().isEmpty ||
+                            value.length < 10 ||
+                            value.length > 10) {
+                          return 'Please enter a valid number';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        enteredEmergencyContact2 = value!;
+                      },
+                    ),
+                  )
+                ],
               ),
               const SizedBox(
                 height: 25,

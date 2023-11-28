@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_view/model/user.dart' as model;
 import 'package:hex_view/shared/widgets/custom_button.dart';

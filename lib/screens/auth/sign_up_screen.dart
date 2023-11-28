@@ -63,7 +63,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       enteredEmergencyContact1,
       enteredEmergencyContact2,
     );
-    Navigator.pop(context);
   }
 
   void _signUpHandler(
@@ -89,13 +88,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
       emergencyContact1,
       emergencyContact2,
     );
+
     if (res == 'success') {
       await navigateToHomeScreen();
-    }
-    if (mounted) {
+    } else {
       setState(() {
         _loading = false;
       });
+    }
+
+    if (mounted) {
       showSnackBar(res, context);
     }
   }
@@ -158,7 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         });
                       },
                       controller: _pageController,
-                      // physics: const NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       children: [
                         PersonalDetailsForm(
                           pageController: _pageController,

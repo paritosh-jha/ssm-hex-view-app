@@ -3,9 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_view/firebase_options.dart';
 import 'package:hex_view/screens/get_started/get_started.dart';
-import 'package:hex_view/screens/splash/splash_screen.dart';
 import 'package:hex_view/screens/tabs/tabs.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hex_view/shared/widgets/custom_loader.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,12 +72,13 @@ class MyApp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const SplashScreen();
+            return const CustomLoader();
           } else if (snapshot.hasData) {
             return const TabsScreen();
-          } else {
+          } else if (!snapshot.hasData) {
             return const GetStartedScreen();
           }
+          return const CustomLoader();
         },
       ),
     );
