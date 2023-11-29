@@ -44,6 +44,14 @@ class _EmergencyContactScreenState extends State<EmergencyContactScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    _firstContactController.dispose();
+    _secondContactController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     fetchEmergencyContacts();
     return SafeArea(

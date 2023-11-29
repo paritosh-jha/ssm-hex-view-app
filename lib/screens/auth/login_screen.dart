@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hex_view/firebase/auth_methods.dart';
 import 'package:hex_view/screens/auth/widgets/login_form.dart';
-import 'package:hex_view/screens/tabs/tabs.dart';
 import 'package:hex_view/shared/widgets/custom_loader.dart';
 
 class LoginScreen extends StatefulWidget {

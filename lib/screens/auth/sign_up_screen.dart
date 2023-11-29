@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hex_view/firebase/auth_methods.dart';
 import 'package:hex_view/screens/auth/widgets/personal_details_form.dart';
@@ -6,7 +6,6 @@ import 'package:hex_view/screens/auth/widgets/signup_credentials_form.dart';
 import 'package:hex_view/screens/auth/widgets/vehicle_details_form.dart';
 import 'package:hex_view/shared/widgets/custom_loader.dart';
 
-final _firebase = FirebaseAuth.instance;
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
