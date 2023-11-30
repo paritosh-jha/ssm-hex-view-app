@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_view/firebase/user_methods.dart';
-import 'package:hex_view/model/user.dart' as model;
-import 'package:hex_view/screens/splash/splash_screen.dart';
+import 'package:hex_view/screens/emergency_contact/widgets/contact_card.dart';
+import 'package:hex_view/screens/emergency_contact/widgets/update_contact_bottom_sheet.dart';
+import 'package:hex_view/shared/widgets/custom_loader.dart';
 
 FirebaseFirestore database = FirebaseFirestore.instance;
 
@@ -15,27 +15,8 @@ class EmergencyContactScreen extends StatefulWidget {
 }
 
 class _EmergencyContactScreenState extends State<EmergencyContactScreen> {
-  late model.User? userData;
+  Map<String, String>? emergencyContacts = {};
   bool isUserEmailAvailable = false;
-
-  final TextEditingController _firstContactController = TextEditingController();
-  final TextEditingController _secondContactController =
-      TextEditingController();
-
-  bool _isEditingFirstContact = false;
-  bool _isEditingSecondContact = false;
-
-  fetchEmergencyContacts() async {
-    userData = await UserMethods().getUserDetails();
-    if (userData == null) {
-      //handle null case
-      print('Curr User Obj is NULL');
-      return;
-    }
-    setState(() {
-      isUserEmailAvailable = true;
-    });
-  }
 
   @override
   void initState() {
@@ -43,158 +24,89 @@ class _EmergencyContactScreenState extends State<EmergencyContactScreen> {
     fetchEmergencyContacts();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    _firstContactController.dispose();
-    _secondContactController.dispose();
-    super.dispose();
+  fetchEmergencyContacts() async {
+    setState(() {
+      isUserEmailAvailable = false;
+    });
+    emergencyContacts = await UserMethods().getEmergencyContacts();
+    if (emergencyContacts == null) {
+      print('EmergencyContacts is NULL');
+      return;
+    }
+    //sort the emergency contacts
+    var sortedKeys = emergencyContacts!.keys.toList()..sort();
+    Map.fromEntries(
+      sortedKeys.map(
+        (key) => MapEntry(
+          key,
+          emergencyContacts![key],
+        ),
+      ),
+    );
+
+    setState(() {
+      // print(emergencyContacts);
+      isUserEmailAvailable = true;
+    });
+  }
+
+  showUpdateBottomSheet(BuildContext context, String initialContactName) {
+    showBottomSheet(
+      elevation: 1,
+      enableDrag: true,
+      context: context,
+      builder: (BuildContext context) {
+        return UpdateContactDetailsBottomSheet(
+          getUpdatedContactInfo: getUpdatedContactInfo,
+          initalContactName: initialContactName,
+        );
+      },
+    );
+  }
+
+  getUpdatedContactInfo({
+    required String updatedContactNum,
+    required String updatedContactName,
+    required String initialContactName,
+  }) {
+    if (emergencyContacts!.isNotEmpty) {
+      emergencyContacts!.remove(initialContactName);
+    }
+
+    emergencyContacts![updatedContactName] = updatedContactNum;
+    print(emergencyContacts);
+    final res = UserMethods()
+        .updateEmergencyContact(updatedEmergencyContacs: emergencyContacts);
+    print(res);
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    fetchEmergencyContacts();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(title: const Text('Emergency Contacts')),
         body: !isUserEmailAvailable
-            ? const SplashScreen()
+            ? const CustomLoader()
             : Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildContactCard(
-                      label: 'Emergency Contact 1',
-                      contact: userData!.emergencyContact1,
-                      isEditing: _isEditingFirstContact,
-                      controller: _firstContactController,
-                      onEditPressed: () {
-                        _toggleEditing('_isEditingFirstContact');
-                      },
-                      onSavePressed: () {
-                        _saveContact('_firstContactController');
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    _buildContactCard(
-                      label: 'Emergency Contact 2',
-                      contact: userData!.emergencyContact2,
-                      isEditing: _isEditingSecondContact,
-                      controller: _secondContactController,
-                      onEditPressed: () {
-                        _toggleEditing('_isEditingSecondContact');
-                      },
-                      onSavePressed: () {
-                        _saveContact('_secondContactController');
-                      },
-                    ),
-                  ],
+                padding: const EdgeInsets.all(20.0),
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    final contactItem =
+                        emergencyContacts!.entries.elementAt(index);
+                    final String contactName = contactItem.key;
+                    final String contactNumber = contactItem.value;
+                    return ContactCard(
+                      index: index,
+                      contactName: contactName,
+                      contactNumber: contactNumber,
+                      showUpdateBottomSheet: showUpdateBottomSheet,
+                    );
+                  },
+                  itemCount: emergencyContacts!.length,
                 ),
               ),
       ),
     );
-  }
-
-  Widget _buildContactCard({
-    required String label,
-    required String contact,
-    required bool isEditing,
-    required TextEditingController controller,
-    required VoidCallback onEditPressed,
-    required VoidCallback onSavePressed,
-  }) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 8),
-            if (isEditing)
-              TextFormField(
-                controller: controller,
-                decoration: const InputDecoration(
-                  labelText: 'Enter new contact',
-                ),
-              )
-            else
-              Text(
-                contact,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                if (!isEditing)
-                  TextButton(
-                    onPressed: onEditPressed,
-                    child: const Text('Edit'),
-                  ),
-                const SizedBox(width: 8),
-                if (isEditing)
-                  ElevatedButton(
-                    onPressed: onSavePressed,
-                    child: const Text('Save'),
-                  ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _toggleEditing(String stateVariable) {
-    setState(() {
-      if (stateVariable == '_isEditingFirstContact') {
-        _isEditingFirstContact = !_isEditingFirstContact;
-        if (_isEditingFirstContact) {
-          _firstContactController.text = '';
-        }
-      } else if (stateVariable == '_isEditingSecondContact') {
-        _isEditingSecondContact = !_isEditingSecondContact;
-        if (_isEditingSecondContact) {
-          _secondContactController.text = '';
-        }
-      }
-    });
-  }
-
-  void _saveContact(String controllerVariable) async {
-    String newContact = '';
-    if (controllerVariable == '_firstContactController') {
-      newContact = _firstContactController.text;
-    } else if (controllerVariable == '_secondContactController') {
-      newContact = _secondContactController.text;
-    }
-
-    // Perform the save operation (update the user data, save to database, etc.)
-
-    // Toggle editing state after saving
-    if (controllerVariable == '_firstContactController') {
-      await database
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set({'emergency_contact1': newContact}, SetOptions(merge: true));
-      _toggleEditing('_isEditingFirstContact');
-    } else if (controllerVariable == '_secondContactController') {
-      await database
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set({'emergency_contact2': newContact}, SetOptions(merge: true));
-      _toggleEditing('_isEditingSecondContact');
-    }
-    setState(() {});
   }
 }

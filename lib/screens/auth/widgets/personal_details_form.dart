@@ -5,8 +5,10 @@ class PersonalDetailsForm extends StatefulWidget {
   final Function({
     required String name,
     required String phone,
-    required String emergencyContact1,
-    required String emergencyContact2,
+    required String emergencyContactName1,
+    required String emergencyContactNumber1,
+    required String emergencyContactName2,
+    required String emergencyContactNumber2,
   }) getPersonalDetails;
   final PageController pageController;
 
@@ -23,11 +25,11 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
   final _formKey = GlobalKey<FormState>();
   String enteredName = '';
   String enteredPhone = '';
-  String enteredEmergencyContact1 = '';
+  String enteredEmergencyContactNumber1 = '';
   String enteredEmergencyContactName1 = '';
   String enteredEmergencyContactName2 = '';
 
-  String enteredEmergencyContact2 = '';
+  String enteredEmergencyContactNumber2 = '';
 
   _onSubmit() {
     final isValid = _formKey.currentState!.validate();
@@ -47,8 +49,10 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
     widget.getPersonalDetails(
       name: enteredName,
       phone: enteredPhone,
-      emergencyContact1: enteredEmergencyContact1,
-      emergencyContact2: enteredEmergencyContact1,
+      emergencyContactNumber1: enteredEmergencyContactNumber1,
+      emergencyContactName1: enteredEmergencyContactName1,
+      emergencyContactName2: enteredEmergencyContactName2,
+      emergencyContactNumber2: enteredEmergencyContactNumber2,
     );
   }
 
@@ -173,7 +177,7 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
                         return null;
                       },
                       onSaved: (value) {
-                        enteredEmergencyContact1 = value!;
+                        enteredEmergencyContactNumber1 = value!;
                       },
                     ),
                   )
@@ -227,7 +231,7 @@ class _PersonalDetailsFormState extends State<PersonalDetailsForm> {
                         return null;
                       },
                       onSaved: (value) {
-                        enteredEmergencyContact2 = value!;
+                        enteredEmergencyContactNumber2 = value!;
                       },
                     ),
                   )

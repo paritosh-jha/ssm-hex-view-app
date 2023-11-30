@@ -20,12 +20,40 @@ class UserMethods {
         phone: userDetails['phone'],
         email: userDetails['email'],
         vehicles: Map<String, String>.from(userDetails['vehicle_num'] ?? {}),
-        emergencyContact1: userDetails['emergency_contact1'],
-        emergencyContact2: userDetails['emergency_contact2'],
+        emergencyContacts:
+            Map<String, String>.from(userDetails['emergency_contacts'] ?? {}),
       );
     } catch (e) {
       return null;
     }
     return currentUser;
+  }
+
+  Future<Map<String, String>?> getEmergencyContacts() async {
+    try {
+      DocumentSnapshot doc = await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .get();
+      Map<String, dynamic> userDetails = doc.data() as Map<String, dynamic>;
+
+      return Map<String, String>.from(userDetails['emergency_contacts'] ?? {});
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<String> updateEmergencyContact(
+      {required Map<String, String>? updatedEmergencyContacs}) async {
+    String res = 'Something went wrong';
+    try {
+      await _firestore.collection('users').doc(_auth.currentUser!.uid).update(
+        {'emergency_contacts': updatedEmergencyContacs},
+      );
+      res = 'success';
+    } catch (e) {
+      return e.toString();
+    }
+    return res;
   }
 }

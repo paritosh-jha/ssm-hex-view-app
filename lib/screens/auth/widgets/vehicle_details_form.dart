@@ -55,7 +55,7 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
       enableDrag: true,
       context: context,
       builder: (BuildContext context) {
-        return VehicleDeatilsBottomSheet(
+        return VehicleDetailsBottomSheet(
           addVehicle: addVehicle,
         );
       },
@@ -63,7 +63,7 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
   }
 
   addVehicle({required String vehicleNum, required String vehicleNickname}) {
-    print(vehicleNickname);
+    // print(vehicleNickname);
     addedVehicles[vehicleNickname] = vehicleNum;
     setState(() {});
   }

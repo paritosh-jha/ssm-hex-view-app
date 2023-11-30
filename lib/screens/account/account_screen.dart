@@ -94,6 +94,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 height: 20,
               ),
               ListTile(
+                style: ListTileStyle.drawer,
                 leading: const Icon(Icons.emergency),
                 title: const Text('Emergency Contact'),
                 onTap: () {
@@ -102,6 +103,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 },
               ),
               ListTile(
+                style: ListTileStyle.drawer,
                 leading: const Icon(Icons.qr_code_rounded),
                 title: const Text('Your QRs'),
                 onTap: () {
@@ -112,6 +114,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 },
               ),
               ListTile(
+                style: ListTileStyle.drawer,
                 leading: const Icon(Icons.logout_rounded),
                 title: const Text('Sign Out'),
                 onTap: () {

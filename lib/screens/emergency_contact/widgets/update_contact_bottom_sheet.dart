@@ -3,20 +3,27 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hex_view/shared/widgets/custom_button.dart';
 
-class VehicleDetailsBottomSheet extends StatefulWidget {
-  final Function({required String vehicleNum, required String vehicleNickname})
-      addVehicle;
-  const VehicleDetailsBottomSheet({super.key, required this.addVehicle});
+class UpdateContactDetailsBottomSheet extends StatefulWidget {
+  final Function(
+      {required String updatedContactNum,
+      required String updatedContactName,
+      required String initialContactName}) getUpdatedContactInfo;
+  final String initalContactName;
+  const UpdateContactDetailsBottomSheet(
+      {super.key,
+      required this.getUpdatedContactInfo,
+      required this.initalContactName});
 
   @override
-  State<VehicleDetailsBottomSheet> createState() =>
-      _VehicleDetailsBottomSheetState();
+  State<UpdateContactDetailsBottomSheet> createState() =>
+      _UpdateContactDetailsBottomSheetState();
 }
 
-class _VehicleDetailsBottomSheetState extends State<VehicleDetailsBottomSheet> {
+class _UpdateContactDetailsBottomSheetState
+    extends State<UpdateContactDetailsBottomSheet> {
   final _formKey = GlobalKey<FormState>();
-  String enteredVehicleNum = '';
-  String enteredVehicleNickName = '';
+  String enteredNewContactNum = '';
+  String enteredNewContactName = '';
 
   _submit() {
     final isValid = _formKey.currentState!.validate();
@@ -26,9 +33,10 @@ class _VehicleDetailsBottomSheetState extends State<VehicleDetailsBottomSheet> {
 
     _formKey.currentState!.save();
 
-    widget.addVehicle(
-      vehicleNickname: enteredVehicleNickName,
-      vehicleNum: enteredVehicleNum,
+    widget.getUpdatedContactInfo(
+      updatedContactName: enteredNewContactName,
+      updatedContactNum: enteredNewContactNum,
+      initialContactName: widget.initalContactName,
     );
 
     Navigator.pop(context);
@@ -64,7 +72,7 @@ class _VehicleDetailsBottomSheetState extends State<VehicleDetailsBottomSheet> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Add vechicle details',
+                      'Update Emergency Contact Info.',
                       style: TextStyle(fontSize: 20),
                     ),
                     const SizedBox(
@@ -72,17 +80,17 @@ class _VehicleDetailsBottomSheetState extends State<VehicleDetailsBottomSheet> {
                     ),
                     TextFormField(
                       decoration: const InputDecoration(
-                        label: Text('Vehicle Number'),
-                        hintText: 'Enter your vehicle number',
+                        label: Text('New Contact Name'),
+                        hintText: 'Enter new contact name',
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Please enter a valid vehicle number';
+                          return 'Please enter a valid contact name';
                         }
                         return null;
                       },
                       onSaved: (value) {
-                        enteredVehicleNum = value!;
+                        enteredNewContactName = value!;
                       },
                     ),
                     const SizedBox(
@@ -90,29 +98,27 @@ class _VehicleDetailsBottomSheetState extends State<VehicleDetailsBottomSheet> {
                     ),
                     TextFormField(
                       decoration: const InputDecoration(
-                        label: Text('Vehicle Name'),
-                        hintText: 'Enter a nickname for the vehicle',
+                        label: Text('New Contact Number'),
+                        hintText: 'Enter new contact number',
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Please enter a valid vehicle name';
+                          return 'Please enter a valid contact number';
                         }
                         return null;
                       },
                       onSaved: (value) {
-                        enteredVehicleNickName = value!;
+                        enteredNewContactNum = value!;
                       },
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    CustomTextIconButton(
-                      label: 'Add',
-                      icon: Icons.arrow_forward_outlined,
+                    CustomTextButton(
+                      label: 'Update',
                       onpressed: _submit,
                       outlined: false,
-                      iconColor: Colors.white,
                     ),
                     const SizedBox(
                       height: 15,

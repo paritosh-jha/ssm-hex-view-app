@@ -20,8 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String enteredName = '';
   String enteredPhone = '';
   Map<String, String> addedVehicles = {};
-  String enteredEmergencyContact1 = '';
-  String enteredEmergencyContact2 = '';
+  Map<String,String> emergencyContacts = {};
   String enteredEmail = '';
   String enteredPassword = '';
 
@@ -31,13 +30,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   getPersonalDetails({
     required String name,
     required String phone,
-    required String emergencyContact1,
-    required String emergencyContact2,
+    required String emergencyContactName1,
+    required String emergencyContactNumber1,
+    required String emergencyContactName2,
+    required String emergencyContactNumber2,
   }) {
     enteredName = name;
     enteredPhone = phone;
-    enteredEmergencyContact1 = emergencyContact1;
-    enteredEmergencyContact2 = emergencyContact2;
+    emergencyContacts[emergencyContactName1] = emergencyContactNumber1;
+    emergencyContacts[emergencyContactName2] = emergencyContactNumber2;
   }
 
   getVehicleDetails({required Map<String, String> vehicleNum}) {
@@ -59,8 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       enteredEmail,
       enteredPassword,
       addedVehicles,
-      enteredEmergencyContact1,
-      enteredEmergencyContact2,
+      emergencyContacts,
     );
   }
 
@@ -70,8 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String email,
     String password,
     Map<String, String> vehicleNum,
-    String emergencyContact1,
-    String emergencyContact2,
+    Map<String, String> emergencyContacts,
   ) async {
     FocusScope.of(context).unfocus();
     setState(() {
@@ -84,8 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       password,
       phone,
       vehicleNum,
-      emergencyContact1,
-      emergencyContact2,
+      emergencyContacts,
     );
 
     if (res == 'success') {
