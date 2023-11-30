@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:hex_view/shared/widgets/custom_button.dart';
 
@@ -69,10 +68,10 @@ class _UpdateContactDetailsBottomSheetState
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text(
-                      'Update Emergency Contact Info.',
+                      'Update Emergency Contact',
                       style: TextStyle(fontSize: 20),
                     ),
                     const SizedBox(
@@ -131,7 +130,7 @@ class _UpdateContactDetailsBottomSheetState
                       outlined: true,
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

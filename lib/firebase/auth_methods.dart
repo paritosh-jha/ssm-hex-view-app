@@ -13,7 +13,6 @@ class AuthMethods {
     String phone,
     Map<String, String> vehicles,
     Map<String, String> emergencyContacts,
-    
   ) async {
     String res = 'Some Error Occured';
     try {
@@ -28,8 +27,8 @@ class AuthMethods {
         "name": name,
         "email": email,
         "phone": phone,
-        "vehicle_num": vehicles,
-        "emergency_contacts" : emergencyContacts,
+        "vehicles": vehicles,
+        "emergency_contacts": emergencyContacts,
       });
       res = 'success';
     } on FirebaseAuthException catch (e) {
