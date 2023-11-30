@@ -45,8 +45,9 @@ class _QRRequestsScreenState extends State<QRRequestsScreen> {
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) =>
-                    QrGeneratorScreen(vehicleNumber: widget.vehicleNumber),
+                builder: (context) => QrGeneratorScreen(
+                    vehicleNumber: widget.vehicleNumber,
+                    vehicleNickname: widget.vehicleNumber),
               ),
             );
           },

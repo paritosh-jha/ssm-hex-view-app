@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:hex_view/shared/widgets/vehicle_qr_page.dart';
+
 
 class QrGeneratorScreen extends StatefulWidget {
-  final String vehicleNumber;
-  const QrGeneratorScreen({super.key, required this.vehicleNumber});
+  final String vehicleNumber, vehicleNickname;
+  const QrGeneratorScreen({super.key, required this.vehicleNumber, required this.vehicleNickname});
 
   @override
   State<QrGeneratorScreen> createState() => _QrGeneratorScreenState();
@@ -21,20 +21,7 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
             style: TextStyle(fontSize: 20),
           ),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              QrImageView(
-                data:
-                    'https://otp-auth-48162.web.app/${FirebaseAuth.instance.currentUser!.uid}/${widget.vehicleNumber}',
-                version: QrVersions.auto,
-                size: 260.0,
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              ),
-            ],
-          ),
-        ),
+        body: VehicleQRScreen(vehicleName: widget.vehicleNickname, vehicleNum: widget.vehicleNumber)
       ),
     );
   }

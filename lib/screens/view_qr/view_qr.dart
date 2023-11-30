@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hex_view/model/user.dart' as model;
-import 'package:hex_view/screens/view_qr/widgets/vehicle_qr_page.dart';
+import 'package:hex_view/shared/widgets/vehicle_qr_page.dart';
 
 class ViewQRScreen extends StatefulWidget {
   final model.User userData;
