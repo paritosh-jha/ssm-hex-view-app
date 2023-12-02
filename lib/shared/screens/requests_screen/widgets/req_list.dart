@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_view/model/request_message.dart';
-import 'package:hex_view/screens/qr_requests/widgets/req_card.dart';
-import 'package:hex_view/screens/qr_requests/widgets/req_overlay.dart';
+import 'package:hex_view/shared/screens/requests_screen/widgets/req_card.dart';
+import 'package:hex_view/shared/screens/requests_screen/widgets/req_overlay.dart';
 import 'package:hex_view/shared/widgets/custom_loader.dart';
 
 class RequestList extends StatefulWidget {

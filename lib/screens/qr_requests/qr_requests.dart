@@ -1,62 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:hex_view/screens/qr_generator/qr_generator.dart';
-import 'package:hex_view/screens/qr_requests/widgets/req_list.dart';
+import 'package:hex_view/firebase/user_methods.dart';
+import 'package:hex_view/model/user.dart' as model;
+import 'package:hex_view/screens/qr_requests/widgets/vehicle_list.dart';
+import 'package:hex_view/shared/widgets/custom_loader.dart';
 
-class QRRequestsScreen extends StatefulWidget {
-  final String vehicleNickname;
-  final String vehicleNumber;
-  const QRRequestsScreen(
-      {super.key, required this.vehicleNumber, required this.vehicleNickname});
+class QrConnectVehicleList extends StatefulWidget {
+  const QrConnectVehicleList({super.key});
 
   @override
-  State<QRRequestsScreen> createState() => _QRRequestsScreenState();
+  State<QrConnectVehicleList> createState() => _QrConnectVehicleListState();
 }
 
-class _QRRequestsScreenState extends State<QRRequestsScreen> {
+class _QrConnectVehicleListState extends State<QrConnectVehicleList> {
+  bool userDataReady = false;
+  late model.User? userData;
+
+  void fetchUserData() async {
+    userData = await UserMethods().getUserDetails();
+    if (userData == null) {
+      //handle null case
+      // print('Curr User Obj is NULL');
+      return;
+    }
+    setState(() {
+      userDataReady = true;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    fetchUserData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.vehicleNickname),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Requests'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: !userDataReady
+            ? const CustomLoader()
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Your vehicles',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Expanded(
+                    child: VehicleList(
+                      vehicles: userData!.vehicles,
+                    ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: RequestList(
-                  vehicleNumber: widget.vehicleNumber,
-                ),
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => QrGeneratorScreen(
-                    vehicleNumber: widget.vehicleNumber,
-                    vehicleNickname: widget.vehicleNumber),
-              ),
-            );
-          },
-          child: const Icon(
-            Icons.qr_code,
-            color: Colors.white,
-            size: 30,
-          ),
-        ),
       ),
     );
   }

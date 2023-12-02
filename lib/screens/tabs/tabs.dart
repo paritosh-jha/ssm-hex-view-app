@@ -5,7 +5,7 @@ import 'package:hex_view/firebase/util_methods.dart';
 import 'package:hex_view/screens/account/account_screen.dart';
 import 'package:hex_view/screens/home/home.dart';
 import 'package:hex_view/model/user.dart' as model;
-import 'package:hex_view/screens/qr_connect/qr_connect.dart';
+import 'package:hex_view/screens/qr_requests/qr_requests.dart';
 import 'package:hex_view/shared/widgets/custom_loader.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -67,20 +67,26 @@ class _TabsScreenState extends State<TabsScreen> {
           onTap: (index) {
             _selectedPage(index);
           },
-          items: const [
+          items: [
             BottomNavigationBarItem(
                 icon: Icon(
-                  FluentIcons.home_20_regular,
+                  selectedPageIndex == 0
+                      ? FluentIcons.home_20_filled
+                      : FluentIcons.home_20_regular,
                 ),
                 label: 'Home'),
             BottomNavigationBarItem(
               icon: Icon(
-                FluentIcons.chat_20_regular,
+                selectedPageIndex == 1
+                    ? FluentIcons.chat_20_filled
+                    : FluentIcons.chat_20_regular,
               ),
               label: 'Requests',
             ),
             BottomNavigationBarItem(
-              icon: Icon(FluentIcons.person_20_regular),
+              icon: Icon(selectedPageIndex == 2
+                  ? FluentIcons.person_20_filled
+                  : FluentIcons.person_20_regular),
               label: 'Account',
             ),
           ],

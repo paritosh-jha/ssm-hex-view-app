@@ -1,7 +1,6 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
-
 class ContactCard extends StatefulWidget {
   final int index;
   final String contactName, contactNumber;
@@ -38,7 +37,7 @@ class _ContactCardState extends State<ContactCard> {
                   backgroundColor:
                       MaterialStatePropertyAll(Colors.grey.shade100)),
               onPressed: () {
-                widget.showUpdateBottomSheet(context,widget.contactName);
+                widget.showUpdateBottomSheet(context, widget.contactName);
               },
               icon: const Icon(
                 FluentIcons.edit_16_filled,

@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:hex_view/model/user.dart' as model;
 import 'package:hex_view/shared/widgets/vehicle_qr_page.dart';
 
-class ViewQRScreen extends StatefulWidget {
+class YourQRScreen extends StatefulWidget {
   final model.User userData;
-  const ViewQRScreen({
+  const YourQRScreen({
     super.key,
     required this.userData,
   });
 
   @override
-  State<ViewQRScreen> createState() => _ViewQRScreenState();
+  State<YourQRScreen> createState() => _YourQRScreenState();
 }
 
-class _ViewQRScreenState extends State<ViewQRScreen> {
+class _YourQRScreenState extends State<YourQRScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

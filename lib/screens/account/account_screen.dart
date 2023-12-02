@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hex_view/firebase/auth_methods.dart';
 import 'package:hex_view/model/user.dart' as model;
 import 'package:hex_view/screens/emergency_contact/emergency_contact.dart';
-import 'package:hex_view/screens/view_qr/view_qr.dart';
+import 'package:hex_view/screens/your_qr/your_qr_screen.dart';
+import 'package:hex_view/screens/your_vehicles/your_vehicles_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   final model.User userData;
@@ -95,11 +96,11 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               ListTile(
                 style: ListTileStyle.drawer,
-                leading: const Icon(Icons.emergency),
-                title: const Text('Emergency Contact'),
+                leading: const Icon(FluentIcons.vehicle_car_20_regular),
+                title: const Text('Your Vehicles'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const EmergencyContactScreen()));
+                      builder: (context) => const YourVehiclesScreen()));
                 },
               ),
               ListTile(
@@ -108,9 +109,18 @@ class _AccountScreenState extends State<AccountScreen> {
                 title: const Text('Your QRs'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ViewQRScreen(
+                      builder: (context) => YourQRScreen(
                             userData: widget.userData,
                           )));
+                },
+              ),
+              ListTile(
+                style: ListTileStyle.drawer,
+                leading: const Icon(Icons.emergency),
+                title: const Text('Emergency Contact'),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const EmergencyContactScreen()));
                 },
               ),
               ListTile(
