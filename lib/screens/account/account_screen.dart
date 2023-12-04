@@ -99,8 +99,11 @@ class _AccountScreenState extends State<AccountScreen> {
                 leading: const Icon(FluentIcons.vehicle_car_20_regular),
                 title: const Text('Your Vehicles'),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const YourVehiclesScreen()));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const YourVehiclesScreen(),
+                    ),
+                  );
                 },
               ),
               ListTile(

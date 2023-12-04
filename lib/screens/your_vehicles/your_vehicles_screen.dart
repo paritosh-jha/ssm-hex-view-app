@@ -1,8 +1,10 @@
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_view/firebase/user_methods.dart';
-import 'package:hex_view/screens/your_vehicles/widgets/vehicle_tile.dart';
+import 'package:hex_view/shared/widgets/add_vehicle_detail_bottom_sheet.dart';
+import 'package:hex_view/screens/your_vehicles/widgets/vehicle_grid.dart';
+import 'package:hex_view/shared/widgets/custom_button.dart';
 import 'package:hex_view/shared/widgets/custom_loader.dart';
+import 'package:hex_view/shared/widgets/custom_snackbar.dart';
 
 class YourVehiclesScreen extends StatefulWidget {
   const YourVehiclesScreen({super.key});
@@ -14,6 +16,7 @@ class YourVehiclesScreen extends StatefulWidget {
 class _YourVehiclesScreenState extends State<YourVehiclesScreen> {
   Map<String, String>? vehicles = {};
   bool areUserVehiclesAvailable = false;
+  bool isBottomSheetOpen = false;
 
   @override
   void initState() {
@@ -30,7 +33,7 @@ class _YourVehiclesScreenState extends State<YourVehiclesScreen> {
       // print('vehicles is NULL');
       return;
     }
-    //sort the emergency contacts
+    //sort the vehicle map
     var sortedKeys = vehicles!.keys.toList()..sort();
     Map.fromEntries(
       sortedKeys.map(
@@ -47,8 +50,41 @@ class _YourVehiclesScreenState extends State<YourVehiclesScreen> {
     });
   }
 
-  addVehicle({required String vehicleName, required String vehicleNum}) {
-    vehicles![vehicleName] = vehicleNum;
+  addVehicle({
+    required String vehicleNickname,
+    required String vehicleNum,
+  }) async {
+    if (vehicles!.containsKey(vehicleNickname)) {
+      CustomSnackBar.show(context, "Vehicle with same name exists.");
+      return;
+    }
+    if (vehicles!.containsValue(vehicleNum)) {
+      CustomSnackBar.show(context, "Vehicle with same number exists.");
+      return;
+    }
+
+    vehicles![vehicleNickname] = vehicleNum;
+
+    //update the vehicle in firebase
+    final res = await UserMethods().addUserVehicle(vehicles: vehicles);
+
+    if (mounted && res == 'success') {
+      CustomSnackBar.show(context, res);
+      setState(() {
+        fetchUserVehicles();
+      });
+    }
+  }
+
+  showAddVehicleBottomSheet(BuildContext context) {
+    showBottomSheet(
+      enableDrag: true,
+      context: context,
+      builder: (BuildContext context) {
+        isBottomSheetOpen = true;
+        return AddVehicleDetailsBottomSheet(addVehicle: addVehicle);
+      },
+    );
   }
 
   @override
@@ -58,35 +94,29 @@ class _YourVehiclesScreenState extends State<YourVehiclesScreen> {
         appBar: AppBar(
           title: const Text('Your Vehicles'),
         ),
-        body: !areUserVehiclesAvailable
-            ? const CustomLoader()
-            : Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: GridView.builder(
-                  itemCount: vehicles!.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                  itemBuilder: (context, index) {
-                    final vehicle = vehicles!.entries.elementAt(index);
-                    final vehicleName = vehicle.key;
-                    final vehicleNum = vehicle.value;
-                    return VehicleTile(
-                      vehicleName: vehicleName,
-                      vehicleNum: vehicleNum,
-                    );
-                  },
+        body: Padding(
+          padding: const EdgeInsets.all(10),
+          child: !areUserVehiclesAvailable
+              ? const CustomLoader()
+              : Column(
+                  children: [
+                    Expanded(
+                      child: VehicleGrid(
+                        vehicles: vehicles!,
+                      ),
+                    ),
+                    Builder(builder: (BuildContext context) {
+                      return CustomTextButton(
+                        label: "Add Vehicle",
+                        onpressed: () {
+                          showAddVehicleBottomSheet(context);
+                        },
+                        outlined: false,
+                      );
+                    })
+                  ],
                 ),
-              ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                FluentIcons.add_20_filled,
-                color: Colors.white,
-              ),
-            )),
+        ),
       ),
     );
   }

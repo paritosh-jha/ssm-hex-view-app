@@ -71,17 +71,17 @@ class UserMethods {
     }
   }
 
-  // Future<String> addUserVehicle(
-  //     {required Map<String, String>? vehicle}) async {
-  //   String res = 'Something went wrong';
-  //   try {
-  //     await _firestore.collection('users').doc(_auth.currentUser!.uid).update(
-  //       {'emergency_contacts': updatedEmergencyContacs},
-  //     );
-  //     res = 'success';
-  //   } catch (e) {
-  //     return e.toString();
-  //   }
-  //   return res;
-  // }
+  Future<String> addUserVehicle(
+      {required Map<String, String>? vehicles}) async {
+    String res = 'Something went wrong';
+    try {
+      await _firestore.collection('users').doc(_auth.currentUser!.uid).update(
+        {'vehicles': vehicles},
+      );
+      res = 'success';
+    } catch (e) {
+      return e.toString();
+    }
+    return res;
+  }
 }

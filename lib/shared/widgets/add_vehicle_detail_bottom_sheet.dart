@@ -1,19 +1,19 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:hex_view/shared/widgets/custom_button.dart';
 
-class VehicleDetailsBottomSheet extends StatefulWidget {
+class AddVehicleDetailsBottomSheet extends StatefulWidget {
   final Function({required String vehicleNum, required String vehicleNickname})
       addVehicle;
-  const VehicleDetailsBottomSheet({super.key, required this.addVehicle});
+  const AddVehicleDetailsBottomSheet({super.key, required this.addVehicle});
 
   @override
-  State<VehicleDetailsBottomSheet> createState() =>
-      _VehicleDetailsBottomSheetState();
+  State<AddVehicleDetailsBottomSheet> createState() =>
+      _AddVehicleDetailsBottomSheetState();
 }
 
-class _VehicleDetailsBottomSheetState extends State<VehicleDetailsBottomSheet> {
+class _AddVehicleDetailsBottomSheetState
+    extends State<AddVehicleDetailsBottomSheet> {
   final _formKey = GlobalKey<FormState>();
   String enteredVehicleNum = '';
   String enteredVehicleNickName = '';
@@ -82,7 +82,7 @@ class _VehicleDetailsBottomSheetState extends State<VehicleDetailsBottomSheet> {
                         return null;
                       },
                       onSaved: (value) {
-                        enteredVehicleNum = value!;
+                        enteredVehicleNum = value!.toUpperCase();
                       },
                     ),
                     const SizedBox(

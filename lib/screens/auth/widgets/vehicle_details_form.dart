@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:hex_view/screens/auth/widgets/vehicle_detail_bottom_sheet.dart';
+import 'package:hex_view/shared/widgets/add_vehicle_detail_bottom_sheet.dart';
 import 'package:hex_view/shared/widgets/custom_button.dart';
 
 class VehicleDetailsForm extends StatefulWidget {
@@ -55,7 +55,7 @@ class _VehicleDetailsFormState extends State<VehicleDetailsForm> {
       enableDrag: true,
       context: context,
       builder: (BuildContext context) {
-        return VehicleDetailsBottomSheet(
+        return AddVehicleDetailsBottomSheet(
           addVehicle: addVehicle,
         );
       },
