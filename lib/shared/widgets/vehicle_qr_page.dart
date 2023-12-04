@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_view/shared/widgets/custom_button.dart';
+import 'package:hex_view/shared/widgets/custom_snackbar.dart';
 import 'package:hex_view/shared/widgets/info_card.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -45,28 +46,17 @@ class _VehicleQRScreenState extends State<VehicleQRScreen> {
             quality: 100,
             name: captureTimestamp,
           );
-          _notifyUserWithSnackBar('QR Code saved in your gallery!', 1500);
+          if (mounted) {
+            CustomSnackBar.show(context, 'QR Code saved in your gallery!');
+          }
         }
       });
     } else if (_storagePermissonStatus.isPermanentlyDenied) {
-      _notifyUserWithSnackBar(
-          'Please grant storage permission to save QR codes', 1500);
+      if (mounted) {
+        CustomSnackBar.show(
+            context, 'Please grant storage permission to save QR codes');
+      }
     }
-  }
-
-  void _notifyUserWithSnackBar(String message, int milliseconds) {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          message,
-          style: const TextStyle(color: Colors.black87),
-        ),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.grey.shade200,
-        duration: Duration(milliseconds: milliseconds),
-      ),
-    );
   }
 
   @override

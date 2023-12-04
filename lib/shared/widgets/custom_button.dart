@@ -63,9 +63,11 @@ class CustomTextButton extends StatelessWidget {
   final String label;
   final Function() onpressed;
   final bool outlined;
+  final Color color;
   const CustomTextButton(
       {super.key,
       required this.label,
+      this.color = Colors.black87,
       required this.onpressed,
       required this.outlined});
 
@@ -81,7 +83,7 @@ class CustomTextButton extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
           backgroundColor: outlined
               ? const MaterialStatePropertyAll(Colors.white)
-              : const MaterialStatePropertyAll(Colors.black87),
+              : MaterialStatePropertyAll(color),
           side: MaterialStatePropertyAll(
             outlined
                 ? const BorderSide(color: Colors.black87, width: 2)

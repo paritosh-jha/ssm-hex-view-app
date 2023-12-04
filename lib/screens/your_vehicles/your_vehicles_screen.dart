@@ -95,7 +95,7 @@ class _YourVehiclesScreenState extends State<YourVehiclesScreen> {
           title: const Text('Your Vehicles'),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(20),
           child: !areUserVehiclesAvailable
               ? const CustomLoader()
               : Column(

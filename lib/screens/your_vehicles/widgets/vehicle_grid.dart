@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hex_view/screens/your_vehicles/widgets/vehicle_item_detail_modal.dart';
 import 'package:hex_view/screens/your_vehicles/widgets/vehicle_tile.dart';
 
 class VehicleGrid extends StatelessWidget {
@@ -19,6 +20,19 @@ class VehicleGrid extends StatelessWidget {
         return VehicleTile(
           vehicleName: vehicleName,
           vehicleNum: vehicleNum,
+          onPressed: () {
+            showModalBottomSheet(
+              showDragHandle: true,
+              backgroundColor: Colors.white,
+              context: context,
+              builder: (BuildContext context) {
+                return VehicleItemDetailModal(
+                  vehicleName: vehicleName,
+                  vehicleNum: vehicleNum,
+                );
+              },
+            );
+          },
         );
       },
     );
