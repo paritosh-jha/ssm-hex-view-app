@@ -87,6 +87,65 @@ class _YourVehiclesScreenState extends State<YourVehiclesScreen> {
     );
   }
 
+  showConfirmDialog({
+    required String vehicleName,
+    required String vehicleNum,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Please Confirm'),
+        content: const Text('Do you wish to remove this vehicle?'),
+        actions: [
+          TextButton(
+            style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.transparent),
+                foregroundColor: MaterialStatePropertyAll(Colors.black87)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              'No',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          TextButton(
+            style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.transparent),
+                foregroundColor: MaterialStatePropertyAll(Colors.redAccent)),
+            onPressed: () {
+              Navigator.of(context).pop();
+              removeVehicle(vehicleName: vehicleName, vehicleNum: vehicleNum);
+            },
+            child: const Text(
+              'Remove',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  removeVehicle({
+    required String vehicleName,
+    required String vehicleNum,
+  }) async {
+    Navigator.of(context).pop();
+    if (vehicles!.length > 1) {
+      vehicles!.remove(vehicleName);
+      final res = await UserMethods().updateUserVehicles(vehicles: vehicles);
+      if (mounted) CustomSnackBar.show(context, res);
+      setState(() {
+        fetchUserVehicles();
+      });
+    } else {
+      CustomSnackBar.show(context, "List of vehicles cannot be empty");
+    }
+  }
+
+  editVehicleName({required String vehicleName, required String vehicleNum}) {}
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -103,6 +162,8 @@ class _YourVehiclesScreenState extends State<YourVehiclesScreen> {
                     Expanded(
                       child: VehicleGrid(
                         vehicles: vehicles!,
+                        onEditVehcileName: editVehicleName,
+                        onRemoveVehicle: showConfirmDialog,
                       ),
                     ),
                     Builder(builder: (BuildContext context) {

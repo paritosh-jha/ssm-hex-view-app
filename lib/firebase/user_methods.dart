@@ -84,4 +84,21 @@ class UserMethods {
     }
     return res;
   }
+
+  Future<String> updateUserVehicles(
+      {required Map<String, String>? vehicles}) async {
+    String res = 'Something went wrong';
+    if(vehicles!.isEmpty){
+      return res;
+    }
+    try {
+      await _firestore.collection('users').doc(_auth.currentUser!.uid).update(
+        {'vehicles': vehicles},
+      );
+      res = 'success';
+    } catch (e) {
+      return e.toString();
+    }
+    return res;
+  }
 }

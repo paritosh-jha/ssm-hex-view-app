@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:hex_view/screens/your_vehicles/widgets/vehicle_item_detail_modal.dart';
-import 'package:hex_view/screens/your_vehicles/widgets/vehicle_tile.dart';
+import 'package:hex_view/screens/your_vehicles/widgets/vehicle_grid_tile.dart';
 
-class VehicleGrid extends StatelessWidget {
+class VehicleGrid extends StatefulWidget {
+  final Function({required String vehicleName, required String vehicleNum})
+      onEditVehcileName, onRemoveVehicle;
   final Map<String, String> vehicles;
-  const VehicleGrid({super.key, required this.vehicles});
+  const VehicleGrid({
+    super.key,
+    required this.vehicles,
+    required this.onEditVehcileName,
+    required this.onRemoveVehicle,
+  });
 
+  @override
+  State<VehicleGrid> createState() => _VehicleGridState();
+}
+
+class _VehicleGridState extends State<VehicleGrid> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      itemCount: vehicles.length, //3 => 0,1,2
+      itemCount: widget.vehicles.length, //3 => 0,1,2
       gridDelegate:
           const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemBuilder: (context, index) {
-        final vehicle = vehicles.entries.elementAt(index);
+        final vehicle = widget.vehicles.entries.elementAt(index);
         final vehicleName = vehicle.key;
         final vehicleNum = vehicle.value;
-
-        return VehicleTile(
+        return VehicleGridTile(
           vehicleName: vehicleName,
           vehicleNum: vehicleNum,
           onPressed: () {
@@ -29,6 +40,14 @@ class VehicleGrid extends StatelessWidget {
                 return VehicleItemDetailModal(
                   vehicleName: vehicleName,
                   vehicleNum: vehicleNum,
+                  onEditVehicleName: () {
+                    widget.onEditVehcileName(
+                        vehicleName: vehicleName, vehicleNum: vehicleNum);
+                  },
+                  onRemoveVehicle: () {
+                    widget.onRemoveVehicle(
+                        vehicleName: vehicleName, vehicleNum: vehicleNum);
+                  },
                 );
               },
             );

@@ -1,20 +1,20 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
-class VehicleTile extends StatefulWidget {
+class VehicleGridTile extends StatefulWidget {
   final Function() onPressed;
   final String vehicleName, vehicleNum;
-  const VehicleTile(
+  const VehicleGridTile(
       {super.key,
       required this.vehicleName,
       required this.vehicleNum,
       required this.onPressed});
 
   @override
-  State<VehicleTile> createState() => _MyWidgetState();
+  State<VehicleGridTile> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<VehicleTile> {
+class _MyWidgetState extends State<VehicleGridTile> {
   @override
   Widget build(BuildContext context) {
     return Card(

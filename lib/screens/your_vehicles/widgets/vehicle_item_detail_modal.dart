@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:hex_view/shared/widgets/custom_button.dart';
 
 class VehicleItemDetailModal extends StatelessWidget {
+  final Function() onEditVehicleName, onRemoveVehicle;
   final String vehicleName, vehicleNum;
   const VehicleItemDetailModal(
-      {super.key, required this.vehicleName, required this.vehicleNum});
+      {super.key,
+      required this.vehicleName,
+      required this.vehicleNum,
+      required this.onEditVehicleName,
+      required this.onRemoveVehicle});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,7 @@ class VehicleItemDetailModal extends StatelessWidget {
       width: double.infinity,
       child: Column(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             children: [
@@ -25,7 +30,7 @@ class VehicleItemDetailModal extends StatelessWidget {
                 child: Icon(FluentIcons.vehicle_car_20_filled),
               ),
               const SizedBox(
-                height: 25,
+                height: 20,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +52,7 @@ class VehicleItemDetailModal extends StatelessWidget {
             children: [
               CustomTextButton(
                 label: 'Edit Vehicle Name',
-                onpressed: () {},
+                onpressed: onEditVehicleName,
                 outlined: false,
               ),
               const SizedBox(
@@ -55,9 +60,19 @@ class VehicleItemDetailModal extends StatelessWidget {
               ),
               CustomTextButton(
                 label: 'Remove vehicle',
-                onpressed: () {},
+                onpressed: onRemoveVehicle,
                 outlined: false,
                 color: Colors.red,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomTextButton(
+                label: 'Cancel',
+                onpressed: () {
+                  Navigator.of(context).pop();
+                },
+                outlined: true,
               )
             ],
           ),

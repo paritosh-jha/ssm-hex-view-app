@@ -1,7 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_view/firebase/user_methods.dart';
-import 'package:hex_view/firebase/util_methods.dart';
+import 'package:hex_view/firebase/push_notifications.dart';
 import 'package:hex_view/screens/account/account_screen.dart';
 import 'package:hex_view/screens/home/home.dart';
 import 'package:hex_view/model/user.dart' as model;
@@ -42,7 +42,7 @@ class _TabsScreenState extends State<TabsScreen> {
   void initState() {
     super.initState();
     fetchUserData();
-    UtilMethods().setUpPushNotifications();
+    PushNotifications().setUpPushNotifications();
   }
 
   @override
