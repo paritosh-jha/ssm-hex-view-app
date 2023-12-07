@@ -2,6 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+Future<void> handleBackgroungMessage(RemoteMessage message) async {
+  print("title + ${message.notification?.title}");
+}
+
 class PushNotifications {
   final _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -12,6 +16,7 @@ class PushNotifications {
       final fcm = FirebaseMessaging.instance;
       await fcm.requestPermission();
       final token = await fcm.getToken();
+      FirebaseMessaging.onBackgroundMessage(handleBackgroungMessage);
       _firestore.collection('users').doc(_auth.currentUser!.uid).set(
         {'fcmToken': token},
         SetOptions(merge: true),

@@ -22,8 +22,8 @@ class InfoCard extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-                color: Colors.black.withOpacity(0.8),
-                fontWeight: FontWeight.bold),
+              color: Colors.grey.shade800,
+            ),
           ),
           const SizedBox(
             height: 5,

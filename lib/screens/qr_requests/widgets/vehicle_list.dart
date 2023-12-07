@@ -20,7 +20,6 @@ class VehicleList extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: Card(
-                  elevation: 0,
                   child: ListTile(
                     leading: const CircleAvatar(
                       backgroundColor: Colors.black26,

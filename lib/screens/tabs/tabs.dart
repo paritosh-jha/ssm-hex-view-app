@@ -47,7 +47,9 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget activePage = const HomeScreen();
+    Widget activePage = HomeScreen(
+      vehicles: userData!.vehicles,
+    );
 
     if (selectedPageIndex == 1) {
       activePage = const QrConnectVehicleList();
@@ -63,18 +65,21 @@ class _TabsScreenState extends State<TabsScreen> {
           child: isUserDataAvailible ? activePage : const CustomLoader(),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
           currentIndex: selectedPageIndex,
           onTap: (index) {
             _selectedPage(index);
           },
           items: [
             BottomNavigationBarItem(
-                icon: Icon(
-                  selectedPageIndex == 0
-                      ? FluentIcons.home_20_filled
-                      : FluentIcons.home_20_regular,
-                ),
-                label: 'Home'),
+              icon: Icon(
+                selectedPageIndex == 0
+                    ? FluentIcons.home_20_filled
+                    : FluentIcons.home_20_regular,
+              ),
+              label: 'Home',
+            ),
             BottomNavigationBarItem(
               icon: Icon(
                 selectedPageIndex == 1

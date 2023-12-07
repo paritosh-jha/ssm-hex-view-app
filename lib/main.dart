@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hex_view/firebase_options.dart';
 import 'package:hex_view/screens/get_started/get_started.dart';
 import 'package:hex_view/screens/tabs/tabs.dart';
@@ -12,7 +13,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'Hex View',
       theme: ThemeData().copyWith(
         scaffoldBackgroundColor: Colors.white,
-        textTheme: GoogleFonts.latoTextTheme(),
+        textTheme: GoogleFonts.interTextTheme(),
         appBarTheme: const AppBarTheme().copyWith(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -63,8 +65,8 @@ class MyApp extends StatelessWidget {
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
             backgroundColor: Colors.black87),
-        cardTheme: CardTheme(
-          color: Colors.grey.shade200,
+        cardTheme: const CardTheme(
+          color: Color(0xfff5f5f5),
           elevation: 0,
         ),
       ),
