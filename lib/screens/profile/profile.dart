@@ -108,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: TextStyle(fontSize: 14),
               ),
               subtitle: Text(
-                " +91 $contact",
+                "+91 $contact",
                 style: const TextStyle(fontSize: 16),
               ),
             )
